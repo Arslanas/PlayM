@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.media.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="appRoot" styleClass="borderPaneMain" stylesheets="@styles/PlayM.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="my.app.playm.controller.Controller">
+    <center>
+        <StackPane fx:id="centerPane" prefHeight="300.0" prefWidth="900.0" styleClass="darkBackground" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="counter" styleClass="frame-counter" text="0">
+               <font>
+                  <Font size="48.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.5809523809523809" endY="1.0" startX="0.40476190476190477">
+                     <stops>
+                        <Stop color="#39549e" />
+                        <Stop color="#bf4242" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <MediaView fx:id="mediaSound" fitHeight="1.0" fitWidth="1.0" visible="false" />
+         </children></StackPane>
+    </center>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" styleClass="menuMaya" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Open" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Save As" />
+                        <MenuItem mnemonicParsing="false" text="Clear" />
+                        <MenuItem mnemonicParsing="false" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Playback">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Audio">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Video">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Bookmarks">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Tools">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+            <padding>
+                <Insets bottom="5.0" />
+            </padding>
+        </MenuBar>
+    </top>
+    <bottom>
+        <AnchorPane>
+            <children>
+                <fx:include source="/track_include.fxml" />
+            </children>
+        </AnchorPane>
+    </bottom>
+</BorderPane>

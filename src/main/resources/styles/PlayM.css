@@ -1,0 +1,38 @@
+.frame-counter{
+    -fx-text-fill: linear-gradient(to bottom, #516791, #6c6d7e)
+}
+
+
+.borderPaneMain{
+    -fx-background-color: #040507
+}
+.bottom{
+    -fx-background-color: #232426
+}
+.lightBackground{
+    -fx-background-color: #dfe0e2
+}
+.darkBackground{
+    -fx-background-color: linear-gradient(to bottom, #414143, #060608)
+}
+.midBackground{
+    -fx-background-color: #7f8082
+}
+.play-button{
+    -fx-background-color: #626365
+}
+.menu-bar{
+    -fx-background-color: #232426;
+}
+.menu .label{
+    -fx-text-fill: #d8d9dd;
+}
+.menu .label:hover{
+    -fx-text-fill: #f8f9fd;
+}
+.menu:hover{
+    -fx-background-color: #b5b6b8;
+}
+.menu-item .label{
+    -fx-text-fill: #65666a;
+}

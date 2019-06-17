@@ -1,0 +1,16 @@
+*.iml
+out
+target
+.idea
+*.png
+*.mov
+*.exe
+*.log
+*.jpg
+*.data
+*.mp3
+design
+readme.txt
+todo
+
+!sample2.mov

@@ -1,0 +1,203 @@
+.sound-button-on{
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-background-image: url("/assets/volume-icon2.png");
+    -fx-background-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+}
+.sound-button-off {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-background-image: url("/assets/volume-icon.png");
+    -fx-background-size: 40 40;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+}
+.sound-slider .track{
+
+    -fx-background-color: linear-gradient(to right, #1b333d, #a4a8b2)
+}
+.sound-slider .thumb{
+    -fx-background-color: linear-gradient(to top, #2f5e6d, #a4a8b2)
+}
+
+.total-slider-range{
+    -fx-background-color: linear-gradient( to right,  rgba(57, 61, 61, 1), rgb(108, 108, 123))
+}
+.video-mode-cover{
+    -fx-background-color: rgba(62, 62, 62, 0.67);
+}
+
+.track-mark-line{
+    -fx-background-color: linear-gradient(to top, rgba(18, 20, 19, 0.78), rgba(226, 228, 247, 0.11))
+}
+.track-slider-control{
+    -fx-background-color: rgba(223, 223, 223, 0.4);
+}
+
+.track-slider-pane{
+
+}
+.track-slider-active-pane{
+    -fx-background-color: linear-gradient(to bottom, rgba(57, 61, 61, 0.25), rgba(220, 220, 247, 0.5))
+}
+
+.track-slider-label{
+    -fx-text-fill: linear-gradient(to bottom, #f7f7f7, #e3e3e3);
+}
+.track-slider-line{
+    -fx-stroke: linear-gradient(to top, #969696, #434343);
+    -fx-stroke-width: 2;
+}
+
+/* .track-zoom*/
+.track-zoom{
+    -fx-background-color: #d6d6d6;
+}
+/* .track-zoom*/
+
+
+
+/* .track-keyframe*/
+.track-keyframe-pane-frame{
+    -fx-background-color: #273039;
+}
+.track-keyframe-pane-frame:hover {
+    -fx-background-color: #5c7181;
+}
+
+.track-keyframe-pane-inner-frame{
+    -fx-background-color: linear-gradient(to bottom, #636363, #7e7e7e);
+}
+
+.track-keyframe-label-frame{
+    -fx-text-fill: #ffffff;
+    -fx-alignment: CENTER;
+}
+.track-keyframe-label-frame-min{
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 3;
+    -fx-alignment: CENTER;
+}
+
+
+.track-keyframe-pane-frame-ghost{
+    -fx-background-color: rgba(61, 71, 83, 0.44);
+}
+
+.track-keyframe-pane-frame-empty{
+    -fx-background-color: rgba(0, 0, 0, 1);
+}
+
+/* .track-keyframe*/
+
+
+/* .track-storeLine*/
+
+.track-line{
+    -fx-background-color: linear-gradient(to bottom, #616164, #101016)
+}
+.track-line:hover{
+    -fx-background-color: linear-gradient(to bottom, #828286, #323245)
+}
+
+/* .track-storeLine*/
+
+
+.track-keyframe{
+    -fx-background-color: #c3d8ed;
+}
+.track-frame{
+    -fx-background-color: linear-gradient(to bottom, #a0a0a0, #e6e6e6);
+}
+
+.frame-label{
+    -fx-alignment:"CENTER";
+    -fx-content-display:"CENTER";
+    -fx-mouse-transparent:true;
+    -fx-pref-width:65.0;
+    -fx-text-alignment:"CENTER" ;
+    -fx-text-fill:#2093ff;
+}
+
+.mySlider{
+    -fx-background-color: #2093ff;
+    -fx-smooth:true;
+    -fx-pref-width: 6;
+    -fx-pref-height: 18;
+}
+.slider-edge{
+    -fx-background-color: #b5b5b5;
+    -fx-smooth:true;
+    -fx-pref-width: 4;
+    -fx-pref-height: 16;
+}
+
+.my-button{
+    -fx-base: #7988ff;
+
+    /*!*      Modena        *!*/
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-text-fill: -fx-text-base-color;
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
+}
+.my-button:armed{
+    -fx-color:-fx-pressed-base;
+}
+.my-button:hover{
+    -fx-color:-fx-hover-base
+}
+.my-button:focused{
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+    -fx-background-insets: -0.2, 1, 2, -1.4, 2.6;
+    -fx-background-radius: 3, 2, 1, 4, 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+.borderPaneMain{
+    -fx-background-color: #040507
+}
+.bottom{
+    -fx-background-color: #232426
+}
+.lightBackground{
+    -fx-background-color: #dfe0e2
+}
+.darkBackground{
+    -fx-background-color: linear-gradient(to bottom, #414143, #060608)
+}
+.midBackground{
+    -fx-background-color: #7f8082
+}
+.play-button{
+    -fx-background-color: #626365
+}
+.menu-bar{
+    -fx-background-color: #232426;
+}
+.menu .label{
+    -fx-text-fill: #d8d9dd;
+}
+.menu .label:hover{
+    -fx-text-fill: #f8f9fd;
+}
+.menu:hover{
+    -fx-background-color: #b5b6b8;
+}
+.menu-item .label{
+    -fx-text-fill: #65666a;
+}

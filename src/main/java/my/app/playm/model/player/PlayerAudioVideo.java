@@ -1,0 +1,91 @@
+package my.app.playm.model.player;
+
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+import lombok.ToString;
+import lombok.extern.log4j.Log4j;
+import my.app.playm.controller.Data;
+import my.app.playm.model.time.Timer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Log4j
+@Component("audioVideo")
+@ToString
+public class PlayerAudioVideo implements PlayerManager {
+    private final Timer timer;
+    private boolean isPlaying = false;
+    private MediaPlayer audioPlayer;
+
+    @Autowired
+    public PlayerAudioVideo(Timer timer) {
+        this.timer = timer;
+    }
+
+
+    public void play() {
+        timer.start();
+
+        audioPlayer.seek(Duration.millis(getAudioTime(Data.currentFrame)));
+        audioPlayer.play();
+
+        isPlaying = true;
+    }
+
+    public void stop() {
+        timer.stop();
+        timer.reset();
+        audioPlayer.stop();
+        isPlaying = false;
+    }
+
+    public void pause() {
+        timer.stop();
+        audioPlayer.pause();
+        isPlaying = false;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    @Override
+    public void updateAudio() {
+        if(isPlaying()){
+            pause();
+            play();
+        };
+    }
+
+    @Override
+    public MediaPlayer getAudioPlayer() {
+        return audioPlayer;
+    }
+
+    @Override
+    public void setAudioPlayer(MediaPlayer audioPlayer) {
+        this.audioPlayer = audioPlayer;
+    }
+    @Override
+    public void playSound(int frame) {
+        if(!isPlaying()){
+            new Thread(()->{
+                audioPlayer.seek(Duration.millis(getAudioTime(frame)));
+                audioPlayer.play();
+                try {
+                    Thread.sleep(1000/Data.framerate);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                audioPlayer.pause();
+            }).start();
+        }
+    }
+
+    private double getAudioTime(int currentFrame) {
+        double duration = audioPlayer.getTotalDuration().toMillis();
+        int originTotalFrames = Data.range.getOrgEnd();
+        return (currentFrame * duration) / originTotalFrames;
+    }
+
+}

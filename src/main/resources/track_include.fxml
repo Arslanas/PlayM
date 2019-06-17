@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="trackRoot" prefWidth="500.0" stylesheets="@styles/track_style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="my.app.playm.controller.TrackController">
+    <children>
+        <VBox fx:id="vbox" alignment="CENTER" spacing="10.0" styleClass="darkBackground" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+            <children>
+            <AnchorPane prefHeight="25.0">
+               <children>
+                  <AnchorPane fx:id="totalSliderPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane fx:id="totalSliderLine" prefHeight="3.0" styleClass="track-frame" translateY="16.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="25.0" />
+                        <AnchorPane fx:id="totalSliderRange" mouseTransparent="true" prefHeight="6.0" prefWidth="0.0" styleClass="total-slider-range" translateY="16.0" visible="true" AnchorPane.bottomAnchor="28.0" />
+                        <AnchorPane fx:id="totalSliderControl" prefHeight="16.0" prefWidth="4.0" styleClass="track-frame" translateY="15.0" />
+                        <Label fx:id="currentFrameLabel" alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="0" textFill="WHITE" translateX="-25.0" translateY="-15.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="toolPane" prefHeight="25.0">
+               <children>
+                  <Slider fx:id="soundSlider" blockIncrement="0.05" max="1.0" prefWidth="100.0" styleClass="sound-slider" value="0.5" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="5.0" />
+                  <Button fx:id="soundButton" layoutX="298.0" mnemonicParsing="false" prefWidth="25.0" styleClass="sound-button-on" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+                <AnchorPane fx:id="sliderPaneTop" prefHeight="25.0" styleClass="darkBackground" GridPane.columnIndex="2">
+                    <children>
+                        <AnchorPane fx:id="sliderPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <AnchorPane fx:id="sliderControlPane" mouseTransparent="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane fx:id="sliderControl" mouseTransparent="true" prefWidth="45.0" styleClass="track-slider-control" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="framePaneTop" maxHeight="-Infinity" prefHeight="45.0">
+                    <children>
+                        <AnchorPane fx:id="framePaneColor" styleClass="track-frame" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <AnchorPane fx:id="framePane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="storeLinePane" styleClass="track-line">
+                    <children>
+                        <AnchorPane fx:id="storePane" prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+            </children>
+            <padding>
+                <Insets bottom="10.0" top="10.0" />
+            </padding>
+        </VBox>
+        <AnchorPane fx:id="markLine" layoutY="104.0" mouseTransparent="true" prefHeight="133.0" prefWidth="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="104.0">
+            <children>
+                <AnchorPane prefWidth="3.0" styleClass="track-mark-line" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <AnchorPane prefWidth="3.0" styleClass="track-mark-line" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            </children>
+        </AnchorPane>
+      <AnchorPane fx:id="videoModeCover" layoutY="89.0" mouseTransparent="true" prefHeight="111.0" prefWidth="500.0" styleClass="video-mode-cover" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
+    </children>
+</AnchorPane>
