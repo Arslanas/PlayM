@@ -1,7 +1,6 @@
 package my.app.playm.model.decode;
 
 import lombok.extern.log4j.Log4j;
-import my.app.playm.controller.Data;
 import my.app.playm.controller.Dispatcher;
 import my.app.playm.entity.frame.ImageFrame;
 

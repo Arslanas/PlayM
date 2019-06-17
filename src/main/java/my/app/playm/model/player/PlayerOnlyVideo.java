@@ -1,25 +1,21 @@
 package my.app.playm.model.player;
 
 import javafx.scene.media.MediaPlayer;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
-import my.app.playm.controller.Data;
 import my.app.playm.model.time.Timer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Log4j
 @Component("onlyVideo")
 @ToString
+@RequiredArgsConstructor
 public class PlayerOnlyVideo implements PlayerManager {
     private final Timer timer;
     private boolean isPlaying = false;
 
-    @Autowired
-    public PlayerOnlyVideo(Timer timer) {
-        this.timer = timer;
-    }
 
     public void play() {
         timer.start();

@@ -2,9 +2,11 @@ package my.app.playm.model.player;
 
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
+import my.app.playm.model.time.PlayRange;
 import my.app.playm.model.time.Timer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,15 +14,14 @@ import org.springframework.stereotype.Component;
 @Log4j
 @Component("audioVideo")
 @ToString
+@RequiredArgsConstructor
 public class PlayerAudioVideo implements PlayerManager {
+    private final PlayRange range;
     private final Timer timer;
+
     private boolean isPlaying = false;
     private MediaPlayer audioPlayer;
 
-    @Autowired
-    public PlayerAudioVideo(Timer timer) {
-        this.timer = timer;
-    }
 
 
     public void play() {
@@ -84,7 +85,7 @@ public class PlayerAudioVideo implements PlayerManager {
 
     private double getAudioTime(int currentFrame) {
         double duration = audioPlayer.getTotalDuration().toMillis();
-        int originTotalFrames = Data.range.getOrgEnd();
+        int originTotalFrames = range.getOrgEnd();
         return (currentFrame * duration) / originTotalFrames;
     }
 

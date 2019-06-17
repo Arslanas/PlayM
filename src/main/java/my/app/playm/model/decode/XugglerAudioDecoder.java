@@ -3,8 +3,10 @@ package my.app.playm.model.decode;
 import com.xuggle.mediatool.IMediaWriter;
 import com.xuggle.mediatool.ToolFactory;
 import com.xuggle.xuggler.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import my.app.playm.controller.Data;
+import my.app.playm.controller.Properties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,7 +14,10 @@ import java.util.List;
 
 @Log4j
 @Component
+@RequiredArgsConstructor
 public class XugglerAudioDecoder implements DecoderAudio{
+
+    private final Properties prop;
 
     private final List<IAudioSamples> samples = new ArrayList<>();
 
@@ -27,7 +32,7 @@ public class XugglerAudioDecoder implements DecoderAudio{
     public void decodeAudio(String source){
         samples.clear();
 
-        String target = Data.prop.getAudioSource();
+        String target = prop.getAudioSource();
 
         IContainer container = getContainer(source);
         IStreamCoder audioCoder = findAudioCoder(container);
