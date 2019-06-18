@@ -6,37 +6,48 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
 import my.app.playm.controller.Dispatcher;
 import my.app.playm.controller.TrackData;
+import my.app.playm.model.player.Player;
 import my.app.playm.model.repo.FrameRepository;
 import my.app.playm.entity.frame.Frame;
 import my.app.playm.entity.frame.SliderFrame;
+import my.app.playm.model.time.PlayRange;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-public final class ZoomHandler {
-    static private double oSceneX;
-    static private double timelinePosition;
-    static private int frameWidth = FrameRepository.frameWidth.get();
-    static private int centerIndex;
+@Log4j
+@Component
+public class ZoomHandler {
+    private double oSceneX;
+    private double timelinePosition;
+    private int centerIndex;
+    @Autowired
+    private FrameRepository frameRepository;
+    @Autowired
+    private PlayRange range;
+    @Autowired
+    private Player player;
 
-    static public final EventHandler<MouseEvent> ZOOM_ON_MOUSE_PRESSED = e -> {
+    public final EventHandler<MouseEvent> ZOOM_ON_MOUSE_PRESSED = e -> {
         if (!e.isAltDown()) return;
         oSceneX = e.getSceneX();
         if (e.isSecondaryButtonDown()) centerIndex = calculateCenterIndex();
         e.consume();
     };
 
-    static public final EventHandler<MouseEvent> ZOOM_ON_MOUSE_RELEASED = e -> {
+    public final EventHandler<MouseEvent> ZOOM_ON_MOUSE_RELEASED = e -> {
         if (!e.isAltDown()) return;
         timelinePosition = TrackData.framePane.getTranslateX();
-        frameWidth = FrameRepository.frameWidth.get();
         e.consume();
     };
     /*Calculate delta between current point and origin and move framePane on delta value*/
-    static public final EventHandler<MouseEvent> ZOOM_ON_MOUSE_DRAGGED = e -> {
+    public final EventHandler<MouseEvent> ZOOM_ON_MOUSE_DRAGGED = e -> {
         if (!e.isAltDown()) return;
         double delta = e.getSceneX() - oSceneX;
         if (e.isPrimaryButtonDown()) doPan(delta);
@@ -44,9 +55,9 @@ public final class ZoomHandler {
         e.consume();
     };
 
-    public static void doZoom(double delta) {
+    public void doZoom(double delta) {
         double speed = 0.2;
-        int width = (int) (speed * delta + frameWidth);
+        int width = (int) (speed * delta + FrameRepository.frameWidth.get());
         if (1 < width && width < 65) {
             zoom(width);
             centerOnScreen();
@@ -54,23 +65,23 @@ public final class ZoomHandler {
         }
     }
 
-    public static void zoom(int width) {
+    public void zoom(int width) {
         FrameRepository.frameWidth.set(width);
-        Data.frameRepo.updateWidth();
+        frameRepository.updateWidth();
         recalculatePositionByIndex(TrackData.sliderPane);
         recalculatePositionByNum(TrackData.storePane);
         resizeFrameLabelFont(width);
         calculateSliderNumDisplay();
     }
 
-    public static void doPan(double delta) {
+    public void doPan(double delta) {
         double speed = 2;
         double position = speed * delta + timelinePosition;
         if (position > 0) position = 0;
         Data.trackPan.setValue(position);
     }
 
-    static private int calculateCenterIndex() {
+    private int calculateCenterIndex() {
         double screenWidth = TrackData.storePane.getScene().getWidth();
         double screenMid = screenWidth / 2;
         int frameWidth = FrameRepository.frameWidth.get();
@@ -81,7 +92,7 @@ public final class ZoomHandler {
         return centerIndex;
     }
 
-    static private void centerOnScreen() {
+    private void centerOnScreen() {
         int newCenterIndex = calculateCenterIndex();
         Double currentValue = Data.trackPan.getValue();
         double offsetValue = (centerIndex - newCenterIndex) * FrameRepository.frameWidth.get();
@@ -92,7 +103,7 @@ public final class ZoomHandler {
         Data.trackPan.setValue(centerValue);
     }
 
-    static private void calculateSliderNumDisplay() {
+    private void calculateSliderNumDisplay() {
         int width = FrameRepository.frameWidth.get();
         TrackData.sliderPane.getChildren().forEach(node -> {
             SliderFrame sliderFrame = (SliderFrame) node;
@@ -117,7 +128,7 @@ public final class ZoomHandler {
         });
     }
 
-    static private void recalculatePositionByIndex(Pane pane) {
+    private void recalculatePositionByIndex(Pane pane) {
         int width = FrameRepository.frameWidth.get();
         List<Node> childList = pane.getChildren();
         IntStream.range(0, childList.size()).forEach(index -> {
@@ -125,7 +136,7 @@ public final class ZoomHandler {
         });
     }
 
-    static private void recalculatePositionByNum(Pane pane) {
+    private void recalculatePositionByNum(Pane pane) {
         int width = FrameRepository.frameWidth.get();
         List<Node> childList = pane.getChildren();
         IntStream.range(0, childList.size()).forEach(index -> {
@@ -134,7 +145,7 @@ public final class ZoomHandler {
         });
     }
 
-    static private void resizeFrameLabelFont(double width) {
+    private void resizeFrameLabelFont(double width) {
         double size = (width * 12) / 40;
         if (width < 12) {
             changeFont(new Font(1));
@@ -143,7 +154,7 @@ public final class ZoomHandler {
         }
     }
 
-    static private void changeFont(Font font) {
+    private void changeFont(Font font) {
         TrackData.framePane.getChildren().stream()
                 .map(e -> ((Frame) e).getLabel())
                 .forEach(label -> label.setFont(font));

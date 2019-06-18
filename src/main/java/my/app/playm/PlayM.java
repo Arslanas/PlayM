@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j;
 import my.app.playm.config.ControllerConfig;
 import my.app.playm.controller.Dispatcher;
 import my.app.playm.controller.Properties;
+import my.app.playm.controller.TrackController;
 import my.app.playm.controller.Util;
 import my.app.playm.model.repo.VideoService;
 import my.app.playm.model.time.Timer;
@@ -22,6 +23,8 @@ public class PlayM extends Application {
     private ConfigurableApplicationContext context;
     @Autowired
     private Timer timer;
+    @Autowired
+    private TrackController trackController;
     @Autowired
     private Properties props;
     @Autowired
@@ -65,6 +68,7 @@ public class PlayM extends Application {
         stage.setTitle("PlayM");
         stage.setScene(scene);
         stage.centerOnScreen();
+        trackController.addHandlers();
         stage.show();
         return scene;
     }

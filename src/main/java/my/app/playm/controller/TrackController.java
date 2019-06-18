@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 @Component
 @Log4j
 public class TrackController implements Initializable {
@@ -65,23 +66,31 @@ public class TrackController implements Initializable {
     @FXML
     public Slider soundSlider;
 
+    @Autowired
+    private FramePaneHandler framePaneHandler;
+    @Autowired
+    private SliderHandler sliderHandler;
+    @Autowired
+    private TotalSliderHandler totalSliderHandler;
+    @Autowired
+    private ZoomHandler zoomHandler;
 
-
-    public TrackController() {
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         log.debug("Initialiaze");
         initData();
         initBindings();
-        addHandlers();
         // Tool pane is not ready yet, so I decided to hide it for a while
         vbox.getChildren().remove(toolPane);
     }
+
     @PostConstruct
-    public void init(){
+    public void init() {
         log.debug("Post construct");
+        log.debug(framePaneHandler);
+        TrackData.framePaneHandler = framePaneHandler;
+        TrackData.sliderHandler = sliderHandler;
     }
 
     private void initData() {
@@ -101,52 +110,53 @@ public class TrackController implements Initializable {
         TrackData.currentFrameLabel = currentFrameLabel;
         TrackData.totalRangePane = totalSliderRange;
         TrackData.soundSlider = soundSlider;
+        TrackData.sliderPaneTop = sliderPaneTop;
+        TrackData.framePaneTop = framePaneTop;
     }
 
     private void initBindings() {
         sliderControl.prefWidthProperty().bind(FrameRepository.frameWidth);
         markLine.prefWidthProperty().bind(sliderControl.prefWidthProperty());
-        markLine.translateXProperty().bind(Bindings.add(sliderControl.translateXProperty(), sliderControlPane.translateXProperty()) );
+        markLine.translateXProperty().bind(Bindings.add(sliderControl.translateXProperty(), sliderControlPane.translateXProperty()));
 
         sliderControlPane.translateXProperty().bind(Data.trackPan);
         storePane.translateXProperty().bind(Data.trackPan);
         sliderPane.translateXProperty().bind(Data.trackPan);
         framePane.translateXProperty().bind(Data.trackPan);
 
-        currentFrameLabel.translateXProperty().bind(totalSliderControl.translateXProperty().subtract(currentFrameLabel.prefWidthProperty().get()/2));
+        currentFrameLabel.translateXProperty().bind(totalSliderControl.translateXProperty().subtract(currentFrameLabel.prefWidthProperty().get() / 2));
         Data.volumeProperty.bind(soundSlider.valueProperty());
     }
 
-    private void addHandlers() {
-        sliderPaneTop.addEventFilter(MouseEvent.MOUSE_PRESSED, ZoomHandler.ZOOM_ON_MOUSE_PRESSED);
-        sliderPaneTop.addEventFilter(MouseEvent.MOUSE_DRAGGED, ZoomHandler.ZOOM_ON_MOUSE_DRAGGED);
-        sliderPaneTop.addEventFilter(MouseEvent.MOUSE_RELEASED, ZoomHandler.ZOOM_ON_MOUSE_RELEASED);
-        framePaneTop.addEventFilter(MouseEvent.MOUSE_PRESSED, ZoomHandler.ZOOM_ON_MOUSE_PRESSED);
-        framePaneTop.addEventFilter(MouseEvent.MOUSE_DRAGGED, ZoomHandler.ZOOM_ON_MOUSE_DRAGGED);
-        framePaneTop.addEventFilter(MouseEvent.MOUSE_RELEASED, ZoomHandler.ZOOM_ON_MOUSE_RELEASED);
+    public void addHandlers() {
+        TrackData.sliderPaneTop.addEventFilter(MouseEvent.MOUSE_DRAGGED, zoomHandler.ZOOM_ON_MOUSE_DRAGGED);
+        TrackData.sliderPaneTop.addEventFilter(MouseEvent.MOUSE_RELEASED, zoomHandler.ZOOM_ON_MOUSE_RELEASED);
+        TrackData.framePaneTop.addEventFilter(MouseEvent.MOUSE_PRESSED, zoomHandler.ZOOM_ON_MOUSE_PRESSED);
+        TrackData.framePaneTop.addEventFilter(MouseEvent.MOUSE_DRAGGED, zoomHandler.ZOOM_ON_MOUSE_DRAGGED);
+        TrackData.framePaneTop.addEventFilter(MouseEvent.MOUSE_RELEASED, zoomHandler.ZOOM_ON_MOUSE_RELEASED);
 
-        framePane.setOnMouseDragged(FramePaneHandler.FRAMEPANE_ON_MOUSE_DRAGGED);
+        TrackData.framePane.setOnMouseDragged(framePaneHandler.FRAMEPANE_ON_MOUSE_DRAGGED);
 
-        sliderPane.setOnMouseDragged(SliderHandler.ON_SLIDER_DRAGGED);
-        sliderPane.setOnMouseReleased(SliderHandler.ON_SLIDER_RELEASED);
-        storePane.setOnDragEntered(FramePaneHandler.STORE_LINE_DRAG_ENTERED);
-        storePane.setOnDragExited(FramePaneHandler.STORE_LINE_DRAG_EXITED);
-        storeLinePane.setOnDragOver(FramePaneHandler.STORE_LINE_DRAG_OVER);
-        storeLinePane.setOnDragDropped(FramePaneHandler.STORE_LINE_DRAG_DROPPED);
+        TrackData.sliderPane.setOnMouseDragged(sliderHandler.ON_SLIDER_DRAGGED);
+        TrackData.sliderPane.setOnMouseReleased(sliderHandler.ON_SLIDER_RELEASED);
+        TrackData.storePane.setOnDragEntered(framePaneHandler.STORE_LINE_DRAG_ENTERED);
+        TrackData.storePane.setOnDragExited(framePaneHandler.STORE_LINE_DRAG_EXITED);
+        TrackData.storeLinePane.setOnDragOver(framePaneHandler.STORE_LINE_DRAG_OVER);
+        TrackData.storeLinePane.setOnDragDropped(framePaneHandler.STORE_LINE_DRAG_DROPPED);
 
-        vbox.setOnDragDone(FramePaneHandler.ROOT_DRAG_DONE);
+        TrackData.vbox.setOnDragDone(framePaneHandler.ROOT_DRAG_DONE);
 
-        totalSliderPane.setOnMousePressed(TotalSliderHandler.ON_PRESSED);
-        totalSliderPane.setOnMouseDragged(TotalSliderHandler.ON_DRAGGED);
+        TrackData.totalSliderPane.setOnMousePressed(totalSliderHandler.ON_PRESSED);
+        TrackData.totalSliderPane.setOnMouseDragged(totalSliderHandler.ON_DRAGGED);
 
-        framePaneTop.addEventFilter(EventType.ROOT, event -> {
+        TrackData.framePaneTop.addEventFilter(EventType.ROOT, event -> {
             if (Data.playMode == PlaybackMode.ORIGINAL) event.consume();
         });
-        storeLinePane.addEventFilter(EventType.ROOT, event -> {
+        TrackData.storeLinePane.addEventFilter(EventType.ROOT, event -> {
             if (Data.playMode == PlaybackMode.ORIGINAL) event.consume();
         });
         //change focus on some other node, because after pressing it starts consuming keyboard events
-        soundSlider.setOnMouseReleased(e-> framePane.requestFocus());
+        TrackData.soundSlider.setOnMouseReleased(e -> framePane.requestFocus());
     }
 
 }

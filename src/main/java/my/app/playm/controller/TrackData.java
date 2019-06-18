@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import my.app.playm.controller.handlers.FramePaneHandler;
+import my.app.playm.controller.handlers.SliderHandler;
 
 public class TrackData {
     static public AnchorPane framePane ;
@@ -23,4 +25,12 @@ public class TrackData {
     static public Label currentFrameLabel;
     static public Pane totalRangePane;
     static public Slider soundSlider;
+
+
+    static public AnchorPane sliderPaneTop;
+    static public AnchorPane framePaneTop;
+
+
+    static public FramePaneHandler framePaneHandler;
+    static public SliderHandler sliderHandler;
 }

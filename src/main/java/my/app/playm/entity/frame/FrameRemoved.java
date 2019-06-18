@@ -1,5 +1,6 @@
 package my.app.playm.entity.frame;
 
+import my.app.playm.controller.TrackData;
 import my.app.playm.controller.handlers.FramePaneHandler;
 
 public class FrameRemoved extends Frame {
@@ -14,7 +15,7 @@ public class FrameRemoved extends Frame {
         return recoverIndex;
     }
     void addHandlers() {
-        setOnMousePressed(FramePaneHandler.FRAME_REMOVED_MOUSE_PRESSED);
+        setOnMousePressed(TrackData.framePaneHandler.FRAME_REMOVED_MOUSE_PRESSED);
     }
 
     @Override

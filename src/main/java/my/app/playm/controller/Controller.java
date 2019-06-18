@@ -1,10 +1,12 @@
 package my.app.playm.controller;
 
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaView;
@@ -15,6 +17,7 @@ import my.app.playm.controller.handlers.*;
 import my.app.playm.model.decode.Decoder;
 import my.app.playm.model.decode.DecoderAudio;
 import my.app.playm.model.moment.MomentRepository;
+import my.app.playm.model.player.PlaybackMode;
 import my.app.playm.model.player.Player;
 import my.app.playm.model.player.PlayerManager;
 import my.app.playm.model.repo.FrameRepository;
@@ -46,33 +49,45 @@ public class Controller implements Initializable {
     private Label counter;
 
     @Autowired
+    private FramePaneHandler framePaneHandler;
+    @Autowired
+    private SliderHandler sliderHandler;
+    @Autowired
+    private TotalSliderHandler totalSliderHandler;
+    @Autowired
+    private ZoomHandler zoomHandler;
+    @Autowired
     private DragDropHandler dragDropHandler;
     @Autowired
-    VideoRepository videoRepository;
+    private ImageSliderHandler imageSliderHandler;
     @Autowired
-    VideoService videoService;
+    private VideoRepository videoRepository;
     @Autowired
-    Player player;
+    private VideoService videoService;
     @Autowired
-    PlayRange range;
+    private Player player;
     @Autowired
-    Timer timer;
+    private PlayRange range;
     @Autowired
-    Decoder decoder;
+    private Timer timer;
     @Autowired
-    DecoderAudio decoderAudio;
+    private Decoder decoder;
     @Autowired
-    MomentRepository momentRepository;
+    private DecoderAudio decoderAudio;
     @Autowired
-    FrameRepository frameRepository;
+    private MomentRepository momentRepository;
     @Autowired
-    Properties prop;
+    private FrameRepository frameRepository;
     @Autowired
-    HotKeyMap keyMap;
+    private Properties prop;
+    @Autowired
+    private HotKeyMap keyMap;
+    @Autowired
+    private TrackController trackController;
 
     @Autowired
     @Qualifier(value = "audioVideo")
-    PlayerManager audioVideoManager;
+    private PlayerManager audioVideoManager;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -112,8 +127,9 @@ public class Controller implements Initializable {
         centerPane.setOnDragOver(dragDropHandler.VIDEO_DRAG_OVER);
         centerPane.setOnDragDropped(dragDropHandler.VIDEO_DROP);
 
-        imageView.setOnMouseDragged(ImageSliderHandler.ON_DRAGGED);
-        imageView.setOnMousePressed(ImageSliderHandler.ON_PRESSED);
-        imageView.setOnScroll(ImageSliderHandler.ON_SCROLL);
+        imageView.setOnMouseDragged(imageSliderHandler.ON_DRAGGED);
+        imageView.setOnMousePressed(imageSliderHandler.ON_PRESSED);
+        imageView.setOnScroll(imageSliderHandler.ON_SCROLL);
     }
+
 }

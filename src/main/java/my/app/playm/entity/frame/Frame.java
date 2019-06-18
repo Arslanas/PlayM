@@ -6,6 +6,7 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import my.app.playm.controller.TrackData;
 import my.app.playm.model.repo.FrameRepository;
 import my.app.playm.controller.handlers.FramePaneHandler;
 
@@ -48,10 +49,10 @@ public class Frame extends AnchorPane {
     }
 
     void addHandlers() {
-        setOnMousePressed(FramePaneHandler.FRAME_MOUSE_PRESSED);
-        setOnDragDetected(FramePaneHandler.FRAME_DRAG_DETECTED);
-        setOnMouseReleased(FramePaneHandler.FRAME_ON_MOUSE_RELEASED);
-        setOnMouseDragEntered(FramePaneHandler.FRAME_MOUSE_DRAG_ENTERED);
+        setOnMousePressed(TrackData.framePaneHandler.FRAME_MOUSE_PRESSED);
+        setOnDragDetected(TrackData.framePaneHandler.FRAME_DRAG_DETECTED);
+        setOnMouseReleased(TrackData.framePaneHandler.FRAME_ON_MOUSE_RELEASED);
+        setOnMouseDragEntered(TrackData.framePaneHandler.FRAME_MOUSE_DRAG_ENTERED);
     }
 
     private void buildView() {

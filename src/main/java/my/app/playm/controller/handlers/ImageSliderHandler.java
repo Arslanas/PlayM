@@ -8,21 +8,28 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
 import my.app.playm.controller.Dispatcher;
 import my.app.playm.controller.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Log4j
+@Component
 public class ImageSliderHandler {
-    private static double press;
-    private static int pressFrameNum;
-    private static int dragFrameNum;
-    private static double width = 25;
+    @Autowired
+    private ZoomHandler zoomHandler;
+    private double press;
+    private int pressFrameNum;
+    private int dragFrameNum;
+    private double dragSensitivity = 35;
 
-    private static final int MIN_PIXELS = 10;
+    private final int MIN_PIXELS = 10;
 
-    private static ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
+    private ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
 
-    static public final EventHandler<MouseEvent> ON_PRESSED = e -> {
+    public final EventHandler<MouseEvent> ON_PRESSED = e -> {
         press = e.getSceneX();
         pressFrameNum = Data.currentFrame;
 
@@ -30,18 +37,18 @@ public class ImageSliderHandler {
         Point2D mousePress = imageViewToImage(Data.imageView, new Point2D(e.getX(), e.getY()));
         mouseDown.set(mousePress);
     };
-    static public final EventHandler<MouseEvent> ON_DRAGGED = e -> {
+    public final EventHandler<MouseEvent> ON_DRAGGED = e -> {
         double delta = e.getSceneX() - press;
         if (e.isAltDown()) {
             if (e.isMiddleButtonDown()) pan(e);
-            if (e.isPrimaryButtonDown()) ZoomHandler.doPan(delta);
-            if (e.isSecondaryButtonDown()) ZoomHandler.doZoom(delta);
+            if (e.isPrimaryButtonDown()) zoomHandler.doPan(delta);
+            if (e.isSecondaryButtonDown()) zoomHandler.doZoom(delta);
             return;
         }
         playVideo(delta);
 
     };
-    static public final EventHandler<ScrollEvent> ON_SCROLL = e -> {
+    public final EventHandler<ScrollEvent> ON_SCROLL = e -> {
         ImageView view = Data.imageView;
         double delta = e.getDeltaY() * -1;
         Rectangle2D viewport = view.getViewport();
@@ -67,15 +74,15 @@ public class ImageSliderHandler {
         view.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
     };
 
-    private static void pan(MouseEvent e) {
+    private void pan(MouseEvent e) {
         ImageView view = Data.imageView;
         Point2D dragPoint = imageViewToImage(view, new Point2D(e.getX(), e.getY()));
         shift(view, dragPoint.subtract(mouseDown.get()));
         mouseDown.set(imageViewToImage(view, new Point2D(e.getX(), e.getY())));
     }
 
-    private static void playVideo(double delta) {
-        int calcDragFrameNum = (int) (delta / width);
+    private void playVideo(double delta) {
+        int calcDragFrameNum = (int) (delta / dragSensitivity);
 
         if (dragFrameNum == calcDragFrameNum) return;
         else dragFrameNum = calcDragFrameNum;
@@ -85,7 +92,7 @@ public class ImageSliderHandler {
         Dispatcher.updateFrame(frameNum);
     }
 
-    private static Point2D imageViewToImage(ImageView imageView, Point2D imageViewCoordinates) {
+    private Point2D imageViewToImage(ImageView imageView, Point2D imageViewCoordinates) {
         double xProportion = imageViewCoordinates.getX() / imageView.getBoundsInLocal().getWidth();
         double yProportion = imageViewCoordinates.getY() / imageView.getBoundsInLocal().getHeight();
 
@@ -95,7 +102,7 @@ public class ImageSliderHandler {
                 viewport.getMinY() + yProportion * viewport.getHeight());
     }
 
-    private static void shift(ImageView imageView, Point2D delta) {
+    private void shift(ImageView imageView, Point2D delta) {
         Rectangle2D viewport = imageView.getViewport();
 
         double width = imageView.getImage().getWidth();

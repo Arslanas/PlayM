@@ -3,6 +3,7 @@ package my.app.playm.entity.frame;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
+import my.app.playm.controller.TrackData;
 import my.app.playm.model.repo.FrameRepository;
 import my.app.playm.controller.handlers.SliderHandler;
 
@@ -41,7 +42,7 @@ public class SliderFrame extends AnchorPane {
         line.setId("slider-frame-line-"+num);
     }
     private void addHandlers() {
-        setOnMousePressed(SliderHandler.ON_SLIDER_PRESSED);
+        setOnMousePressed(TrackData.sliderHandler.ON_SLIDER_PRESSED);
     }
 
     private void buildView() {

@@ -1,13 +1,12 @@
 package my.app.playm.model.time;
 
 import javafx.scene.media.MediaPlayer;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
 import my.app.playm.controller.Dispatcher;
 import my.app.playm.model.decode.DecoderAudio;
 import my.app.playm.model.player.PlaybackMode;
-import my.app.playm.model.repo.VideoRepository;
+import my.app.playm.model.repo.FrameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +23,7 @@ public class TimerThread implements Timer {
     @Autowired
     private DecoderAudio decoderAudio;
     @Autowired
-    private VideoRepository videoRepo;
+    private FrameRepository frameRepository;
 
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     // process is for cancelling playback
@@ -40,7 +39,7 @@ public class TimerThread implements Timer {
                 reset();
             }
         } else if (Data.playMode == PlaybackMode.ACTUAL) {
-            if (Data.currentFrame > videoRepo.size() - 1) reset();
+            if (Data.currentFrame > frameRepository.size() - 1) reset();
         } else {
             if (Data.currentFrame > range.getOrgEnd()) reset();
         }
@@ -54,7 +53,7 @@ public class TimerThread implements Timer {
     };
     private Runnable playBackward = () -> {
         // return back to start frame if reaches the end frame (looping playback)
-        if (--Data.currentFrame < 0) Data.currentFrame = videoRepo.size() - 1;
+        if (--Data.currentFrame < 0) Data.currentFrame = frameRepository.size() - 1;
         if (Data.currentFrame % Data.frameStep != 0) return;
 
         Dispatcher.updateFrame(Data.currentFrame);
