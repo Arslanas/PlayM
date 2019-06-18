@@ -32,7 +32,7 @@ public class TotalSliderHandler {
 
         currentFrameNum = frameNum;
 
-        Dispatcher.updateFrame(frameNum);
+        Data.dispatcher.updateFrame(frameNum);
         player.updateAudio();
 
         if (e.isSecondaryButtonDown()) {
@@ -52,7 +52,7 @@ public class TotalSliderHandler {
         if (frameNum == currentFrameNum) return;
         else currentFrameNum = frameNum;
 
-        Dispatcher.updateFrame(frameNum);
+        Data.dispatcher.updateFrame(frameNum);
         player.playSound(frameNum);
 
 

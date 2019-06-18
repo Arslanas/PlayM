@@ -8,9 +8,11 @@ import my.app.playm.aop.SaveMoment;
 import my.app.playm.aop.UpdateAfter;
 import my.app.playm.controller.Util;
 import my.app.playm.entity.frame.Frame;
+import my.app.playm.entity.frame.FrameProducer;
 import my.app.playm.entity.frame.FrameRemoved;
 import my.app.playm.model.moment.Moment;
 import my.app.playm.model.moment.MomentOriginator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,8 +27,8 @@ public class FrameRepositoryImpl implements FrameRepository, MomentOriginator {
     private ObservableList<Node> list;
     private ObservableList<Node> listRemoved;
 
-    public FrameRepositoryImpl() {
-    }
+    @Autowired
+    private FrameProducer frameProducer;
 
     @Override
     public void saveMoment(Moment moment) {
@@ -58,10 +60,10 @@ public class FrameRepositoryImpl implements FrameRepository, MomentOriginator {
     @Override
     public void makeEmpty(Frame frame) {
         int index = indexOf(frame);
-        list.set(index, new Frame(frame.getNum(), true));
+        list.set(index, frameProducer.createFrame(frame.getNum(), true));
         recalculateFrom(index);
 
-        FrameRemoved frameRemoved = new FrameRemoved(frame.getNum(), index);
+        FrameRemoved frameRemoved = frameProducer.createFrameRemoved(frame.getNum(), index);
 
         listRemoved.add(frameRemoved);
         frameRemoved.setTranslateX(frameRemoved.getNum() * FrameRepository.frameWidth.get());
@@ -73,7 +75,7 @@ public class FrameRepositoryImpl implements FrameRepository, MomentOriginator {
         boolean result = list.remove(frame);
         recalculateFrom(index);
 
-        FrameRemoved frameRemoved = new FrameRemoved(frame.getNum(), index);
+        FrameRemoved frameRemoved = frameProducer.createFrameRemoved(frame.getNum(), index);
 
         listRemoved.add(frameRemoved);
         frameRemoved.setTranslateX(frameRemoved.getNum() * FrameRepository.frameWidth.get());
@@ -91,7 +93,7 @@ public class FrameRepositoryImpl implements FrameRepository, MomentOriginator {
 
         if (frame.isEmpty()) return true;
 
-        FrameRemoved frameRemoved = new FrameRemoved(frame.getNum(), index);
+        FrameRemoved frameRemoved = frameProducer.createFrameRemoved(frame.getNum(), index);
 
         listRemoved.add(frameRemoved);
         frameRemoved.setTranslateX(frameRemoved.getNum() * FrameRepository.frameWidth.get());
@@ -123,7 +125,7 @@ public class FrameRepositoryImpl implements FrameRepository, MomentOriginator {
     @SaveMoment
     @Override
     public void add(int imageNum) {
-        list.add(new Frame(imageNum));
+        list.add(frameProducer.createFrame(imageNum));
         recalculateFrom(0);
     }
 
@@ -149,7 +151,7 @@ public class FrameRepositoryImpl implements FrameRepository, MomentOriginator {
     @SaveMoment
     @Override
     public void shiftRightFrom(int index) {
-        list.add(index, new Frame(get(index).getNum(), true));
+        list.add(index, frameProducer.createFrame(get(index).getNum(), true));
         recalculateFrom(index);
     }
 
@@ -157,13 +159,13 @@ public class FrameRepositoryImpl implements FrameRepository, MomentOriginator {
     @Override
     public void addEmpty(int index) {
         int num = get(index).getNum();
-        list.add(++index, new Frame(num, true));
+        list.add(++index, frameProducer.createFrame(num, true));
         recalculateFrom(index);
     }
 
     private void recalculate(int index) {
         Frame frame = (Frame) list.get(index);
-        if (frame.isEmpty()) frame = new Frame(get(index - 1).getNum(), true);
+        if (frame.isEmpty()) frame = frameProducer.createFrame(get(index - 1).getNum(), true);
         frame.setTranslateX(index * FrameRepository.frameWidth.get());
         list.set(index, frame);
     }
@@ -190,7 +192,7 @@ public class FrameRepositoryImpl implements FrameRepository, MomentOriginator {
         if (currentDelta > 0) {
             List<Node> dummies = IntStream.range(0, currentDelta).mapToObj(i -> {
                 int num = get(closestNotEmptyFrameIndex).getNum();
-                return new Frame(num, true);
+                return frameProducer.createFrame(num, true);
             }).collect(Collectors.toList());
             addAll(currentIndex, dummies);
         }
@@ -214,7 +216,7 @@ public class FrameRepositoryImpl implements FrameRepository, MomentOriginator {
     @Override
     public void recover(FrameRemoved frameRemoved) {
         int num = frameRemoved.getNum();
-        Frame frame = new Frame(num);
+        Frame frame = frameProducer.createFrame(num);
         int prevFrameIndex = getPrevIndexByNum(num);
         int nextFrameIndex = getNextIndexByNum(num);
         int recoverIndex = frameRemoved.getRecoverIndex();

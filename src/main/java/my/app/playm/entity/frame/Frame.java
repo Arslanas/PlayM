@@ -6,9 +6,7 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import my.app.playm.controller.TrackData;
 import my.app.playm.model.repo.FrameRepository;
-import my.app.playm.controller.handlers.FramePaneHandler;
 
 public class Frame extends AnchorPane {
     final Pane innerPane;
@@ -25,7 +23,6 @@ public class Frame extends AnchorPane {
         addId();
         buildView();
         buildStyle();
-        addHandlers();
     }
 
     public Frame(int num, boolean isEmpty) {
@@ -48,12 +45,6 @@ public class Frame extends AnchorPane {
         label.setId("track-keyframe-label-" + num);
     }
 
-    void addHandlers() {
-        setOnMousePressed(TrackData.framePaneHandler.FRAME_MOUSE_PRESSED);
-        setOnDragDetected(TrackData.framePaneHandler.FRAME_DRAG_DETECTED);
-        setOnMouseReleased(TrackData.framePaneHandler.FRAME_ON_MOUSE_RELEASED);
-        setOnMouseDragEntered(TrackData.framePaneHandler.FRAME_MOUSE_DRAG_ENTERED);
-    }
 
     private void buildView() {
         label.setMouseTransparent(true);

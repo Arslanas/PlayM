@@ -33,23 +33,71 @@ public class ImageSliderHandler {
         press = e.getSceneX();
         pressFrameNum = Data.currentFrame;
 
-
         Point2D mousePress = imageViewToImage(Data.imageView, new Point2D(e.getX(), e.getY()));
         mouseDown.set(mousePress);
+
+        zoomHandler.ZOOM_ON_MOUSE_PRESSED.handle(e);
     };
     public final EventHandler<MouseEvent> ON_DRAGGED = e -> {
         double delta = e.getSceneX() - press;
         if (e.isAltDown()) {
-            if (e.isMiddleButtonDown()) pan(e);
-            if (e.isPrimaryButtonDown()) zoomHandler.doPan(delta);
-            if (e.isSecondaryButtonDown()) zoomHandler.doZoom(delta);
+            if (e.isPrimaryButtonDown()) pan(e);
+            if (e.isMiddleButtonDown()) zoomHandler.doPan(delta);
+            if (e.isSecondaryButtonDown()) zoomImage(e);
             return;
         }
         playVideo(delta);
-
     };
+    public final EventHandler<MouseEvent> ON_RELEASED = e -> {
+        zoomHandler.ZOOM_ON_MOUSE_RELEASED.handle(e);
+    };
+
+    private double scalePress = 1;
+    private double deltaPrev = 0;
+
+    private void zoomImage(MouseEvent e) {
+        ImageView view = Data.imageView;
+        Rectangle2D viewport = view.getViewport();
+
+        double newScale = getNewScale(e);
+
+        double scale = Util.clamp(newScale,
+                // don't scale so we're zoomed in to fewer than MIN_PIXELS in any direction:
+                Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
+                // don't scale so that we're bigger than image dimensions:
+                Math.max(Data.imageWidth.get() / viewport.getWidth(), Data.imageHeight.get() / viewport.getHeight())
+        );
+        scalePress = newScale;
+        Point2D mouse = imageViewToImage(view, new Point2D(e.getX(), e.getY()));
+
+        double newWidth = viewport.getWidth() * scale;
+        double newHeight = viewport.getHeight() * scale;
+        double newMinX = Util.clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
+                0, Data.imageWidth.get() - newWidth);
+        double newMinY = Util.clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
+                0, Data.imageHeight.get() - newHeight);
+
+        view.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
+    }
+
+    private double getNewScale(MouseEvent e) {
+        double delta = press - e.getSceneX();
+
+        ZoomDirection direction = null;
+        if (delta - deltaPrev > 0) direction = ZoomDirection.IN;
+        if (delta - deltaPrev <= 0) direction = ZoomDirection.OUT;
+        scalePress = 1;
+        deltaPrev = delta;
+        double newScale = 0;
+
+        if (direction == ZoomDirection.IN) newScale = scalePress + 0.01;
+        if (direction == ZoomDirection.OUT) newScale = scalePress - 0.01;
+        return newScale;
+    }
+
     public final EventHandler<ScrollEvent> ON_SCROLL = e -> {
         ImageView view = Data.imageView;
+
         double delta = e.getDeltaY() * -1;
         Rectangle2D viewport = view.getViewport();
 
@@ -89,7 +137,7 @@ public class ImageSliderHandler {
 
         int frameNum = pressFrameNum + dragFrameNum;
 
-        Dispatcher.updateFrame(frameNum);
+        Data.dispatcher.updateFrame(frameNum);
     }
 
     private Point2D imageViewToImage(ImageView imageView, Point2D imageViewCoordinates) {
@@ -115,5 +163,8 @@ public class ImageSliderHandler {
         double minY = Util.clamp(viewport.getMinY() - delta.getY(), 0, maxY);
 
         imageView.setViewport(new Rectangle2D(minX, minY, viewport.getWidth(), viewport.getHeight()));
+    }
+    public enum ZoomDirection{
+        IN, OUT
     }
 }

@@ -27,12 +27,9 @@ public class ZoomHandler {
     private double oSceneX;
     private double timelinePosition;
     private int centerIndex;
+    static private int frameWidth = FrameRepository.frameWidth.get();
     @Autowired
     private FrameRepository frameRepository;
-    @Autowired
-    private PlayRange range;
-    @Autowired
-    private Player player;
 
     public final EventHandler<MouseEvent> ZOOM_ON_MOUSE_PRESSED = e -> {
         if (!e.isAltDown()) return;
@@ -44,6 +41,7 @@ public class ZoomHandler {
     public final EventHandler<MouseEvent> ZOOM_ON_MOUSE_RELEASED = e -> {
         if (!e.isAltDown()) return;
         timelinePosition = TrackData.framePane.getTranslateX();
+        frameWidth = FrameRepository.frameWidth.get();
         e.consume();
     };
     /*Calculate delta between current point and origin and move framePane on delta value*/
@@ -57,11 +55,11 @@ public class ZoomHandler {
 
     public void doZoom(double delta) {
         double speed = 0.2;
-        int width = (int) (speed * delta + FrameRepository.frameWidth.get());
+        int width = (int) (speed * delta + frameWidth);
         if (1 < width && width < 65) {
             zoom(width);
             centerOnScreen();
-            Dispatcher.updateFrame(Data.currentFrame);
+            Data.dispatcher.updateFrame(Data.currentFrame);
         }
     }
 

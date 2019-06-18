@@ -1,6 +1,7 @@
 package my.app.playm.model.decode;
 
 import lombok.extern.log4j.Log4j;
+import my.app.playm.controller.Data;
 import my.app.playm.controller.Dispatcher;
 import my.app.playm.entity.frame.ImageFrame;
 
@@ -33,7 +34,7 @@ public class SerializedDecoder implements Decoder {
     @Override
     public void decodeAndEvent(String source) {
         List<ImageFrame> list = decodeImages("video.data");
-        list.forEach(imageFrame -> Dispatcher.onNewImageFrame(imageFrame));
+        list.forEach(imageFrame -> Data.dispatcher.onNewImageFrame(imageFrame));
     }
 
     @Override

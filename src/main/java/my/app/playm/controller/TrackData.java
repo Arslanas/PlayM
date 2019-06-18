@@ -25,12 +25,6 @@ public class TrackData {
     static public Label currentFrameLabel;
     static public Pane totalRangePane;
     static public Slider soundSlider;
-
-
     static public AnchorPane sliderPaneTop;
     static public AnchorPane framePaneTop;
-
-
-    static public FramePaneHandler framePaneHandler;
-    static public SliderHandler sliderHandler;
 }

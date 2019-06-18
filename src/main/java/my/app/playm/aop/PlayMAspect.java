@@ -20,6 +20,8 @@ public class PlayMAspect {
 
     @Autowired
     MomentRepository momentRepository;
+    @Autowired
+    Dispatcher dispatcher;
 
     @Around("@annotation(SaveMoment)")
     public Object saveMoment(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -27,7 +29,7 @@ public class PlayMAspect {
 
         Object methodReturnValue = joinPoint.proceed();
 
-        if (Data.isDecodeComplete) Dispatcher.updateAll();
+        if (Data.isDecodeComplete) dispatcher.updateAll();
         return methodReturnValue;
     }
 
@@ -35,7 +37,7 @@ public class PlayMAspect {
     public Object update(ProceedingJoinPoint joinPoint) throws Throwable {
         Object methodReturnValue = joinPoint.proceed();
 
-        Dispatcher.updateAll();
+        dispatcher.updateAll();
         return methodReturnValue;
     }
 

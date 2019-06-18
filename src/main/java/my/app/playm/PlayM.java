@@ -26,9 +26,9 @@ public class PlayM extends Application {
     @Autowired
     private Properties props;
     @Autowired
-    private VideoService videoService;
-    @Autowired
     private ControllerConfig.View view;
+    @Autowired
+    private Dispatcher dispatcher;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -37,21 +37,21 @@ public class PlayM extends Application {
 
         Scene scene = setupAndShowScene(stage);
 
-        Dispatcher.onSceneLoaded(scene, stage);
+        dispatcher.onSceneLoaded(scene, stage);
 
         loadVideo();
+        //dispatcher.loadSequence(50);
     }
 
     private void loadVideo() throws Exception {
-        if (savedArgs.length > 0) videoService.decodeVideo(savedArgs[0]);
-        else videoService.decodeVideo(Util.getSource(props.getDebugVideoSource()));
+        if (savedArgs.length > 0) dispatcher.decodeVideo(savedArgs[0]);
+        else dispatcher.decodeVideo(Util.getSource(props.getDebugVideoSource()));
     }
 
     @Override
     public void stop() throws Exception {
-        timer.close();
+        dispatcher.closeApp();
         super.stop();
-        context.close();
     }
 
     public static void main(String[] args) {

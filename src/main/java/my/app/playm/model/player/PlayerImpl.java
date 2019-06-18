@@ -1,6 +1,7 @@
 package my.app.playm.model.player;
 
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class PlayerImpl implements Player {
     private PlayerManager manager;
 
     @Autowired
-    public PlayerImpl(@Qualifier("audioVideo")PlayerManager manager) {
+    public PlayerImpl(@Qualifier("audioVideo") PlayerManager manager) {
         this.manager = manager;
     }
 
@@ -43,6 +44,9 @@ public class PlayerImpl implements Player {
     public void playSound(int frame) {
         manager.playSound(frame);
     }
+
+    @Override
+    public void seekAudio(int seekFrame) { manager.seekAudio(seekFrame); }
 
     @Override
     public void setAudioPlayer(MediaPlayer audioPlayer) {

@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import lombok.extern.log4j.Log4j;
+import my.app.playm.controller.Data;
 import my.app.playm.controller.Dispatcher;
 import my.app.playm.entity.frame.SliderFrame;
 import my.app.playm.model.player.Player;
@@ -29,6 +30,7 @@ public final class SliderHandler {
         orgPressSceneX = (int) e.getSceneX();
         SliderFrame sliderFrame = (SliderFrame) getNode(e);
         orgIndex = sliderFrame.getNum();
+
         if (e.isSecondaryButtonDown() && e.getClickCount() == 1) {
             range.setRange(sliderFrame.getNum());
             return;
@@ -37,7 +39,7 @@ public final class SliderHandler {
             range.reset();
         }
 
-        Dispatcher.updateFrame(sliderFrame.getNum());
+        Data.dispatcher.updateFrame(sliderFrame.getNum());
         player.playSound(sliderFrame.getNum());
     };
 
@@ -60,7 +62,7 @@ public final class SliderHandler {
             return;
         }
 
-        Dispatcher.updateFrame(frameNum);
+        Data.dispatcher.updateFrame(frameNum);
         player.playSound(frameNum);
     };
 

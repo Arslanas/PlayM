@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
 import my.app.playm.controller.Dispatcher;
+import my.app.playm.controller.Properties;
 import my.app.playm.model.decode.Decoder;
 import my.app.playm.model.decode.DecoderAudio;
 import my.app.playm.model.decode.Exporter;
@@ -30,12 +31,12 @@ public class VideoServiceImpl implements VideoService{
     private final DecoderAudio decoderAudio;
     private final PlayerOnlyVideo onlyVideoPlayer;
     private final PlayerAudioVideo audioVideoPlayer;
+    private final Properties prop;
 
     public void decodeVideo(String source) {
-        Dispatcher.onStartNewVideo(source);
         new Thread(() -> {
             decoder.decodeAndEvent(source);
-            Dispatcher.onCompleteNewVideo();
+            Data.dispatcher.onCompleteNewVideo();
         }).start();
         new Thread(() -> {
             decodeAudio(source);
@@ -61,7 +62,7 @@ public class VideoServiceImpl implements VideoService{
             return;
         }
         player.setManager(audioVideoPlayer);
-        Media media = new Media(Paths.get(Data.prop.getAudioSource()).toUri().toString());
+        Media media = new Media(Paths.get(prop.getAudioSource()).toUri().toString());
         MediaPlayer audioPlayer = new MediaPlayer(media);
 
         audioPlayer.volumeProperty().bind(Data.volumeProperty);

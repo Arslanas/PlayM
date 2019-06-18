@@ -8,7 +8,6 @@ import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
 import my.app.playm.model.time.PlayRange;
 import my.app.playm.model.time.Timer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Log4j
@@ -22,12 +21,15 @@ public class PlayerAudioVideo implements PlayerManager {
     private boolean isPlaying = false;
     private MediaPlayer audioPlayer;
 
-
+    @Override
+    public void seekAudio(int seekFrame) {
+        audioPlayer.seek(Duration.millis(getAudioTime(seekFrame)));
+    }
 
     public void play() {
         timer.start();
 
-        audioPlayer.seek(Duration.millis(getAudioTime(Data.currentFrame)));
+        seekAudio(Data.currentFrame);
         audioPlayer.play();
 
         isPlaying = true;
@@ -71,7 +73,7 @@ public class PlayerAudioVideo implements PlayerManager {
     public void playSound(int frame) {
         if(!isPlaying()){
             new Thread(()->{
-                audioPlayer.seek(Duration.millis(getAudioTime(frame)));
+                seekAudio(frame);
                 audioPlayer.play();
                 try {
                     Thread.sleep(1000/Data.framerate);

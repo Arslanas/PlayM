@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
 import my.app.playm.controller.Dispatcher;
 import my.app.playm.entity.frame.ImageFrame;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.image.BufferedImage;
@@ -17,7 +18,8 @@ import java.util.List;
 
 @Log4j
 @Component
-public class XugglerDecoder implements Decoder{
+public class XugglerDecoder implements Decoder {
+
     @Override
     public List<BufferedImage> decode(String source) {
         throw new UnsupportedOperationException();
@@ -48,7 +50,7 @@ public class XugglerDecoder implements Decoder{
         IStream stream = getVideoStream(container);
         IStreamCoder videoCoder = getStreamCoder(stream);
 
-        Data.framerate = (int)videoCoder.getFrameRate().getValue();
+        Data.framerate = (int) videoCoder.getFrameRate().getValue();
         log.debug(String.format("Framerate - " + Data.framerate));
 
         IPacket packet = IPacket.make();
@@ -81,7 +83,7 @@ public class XugglerDecoder implements Decoder{
                 offset += bytesDecoded;
                 if (picture.isComplete()) {
                     ImageFrame imageFrame = convert(picture, converter, imageNum);
-                    Dispatcher.onNewImageFrame(imageFrame);
+                    Data.dispatcher.onNewImageFrame(imageFrame);
                     imageNum++;
                     frameList.add(imageFrame);
                 }
@@ -105,7 +107,7 @@ public class XugglerDecoder implements Decoder{
                 if (picture.getTimeStamp() <= timestamp) break;
                 if (picture.isComplete()) {
                     ImageFrame imageFrame = convert(picture, converter, imageNum);
-                    Dispatcher.onNewImageFrame(imageFrame);
+                    Data.dispatcher.onNewImageFrame(imageFrame);
                     // This line saves timestamp to compare it with next decoded picture`s timestamp
                     timestamp = picture.getTimeStamp();
                     imageNum++;

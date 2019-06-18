@@ -2,6 +2,7 @@ package my.app.playm.model.time;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import my.app.playm.controller.Data;
 import my.app.playm.model.repo.FrameRepository;
 import org.springframework.stereotype.Component;
 import javafx.scene.Node;
@@ -14,14 +15,13 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class PlayRangeImpl implements PlayRange {
-    private final FrameRepository frameRepository;
     private int start = 0 ;
     private int end = 0;
     private int orgEnd = 0;
     private boolean isStart, isEnd;
-    public void setRange(int num){
 
-        if(num > frameRepository.size() - 1) num = frameRepository.size()-1;
+    public void setRange(int num){
+        if(num > Data.dispatcher.totalFrames() - 1) num = Data.dispatcher.totalFrames() - 1;
         if(num < 0 ) num = 0;
 
         if(!isStart && !isEnd) {
@@ -88,7 +88,7 @@ public class PlayRangeImpl implements PlayRange {
     }
 
     private void updateTotalRange() {
-        double totalFrames = frameRepository.size()-1;
+        double totalFrames = Data.dispatcher.totalFrames()-1;
         double totalWidth = TrackData.totalSliderPane.getBoundsInLocal().getWidth() - TrackData.currentFrameLabel.getWidth() / 2 ;
         double frameWidth = totalWidth/totalFrames;
 
@@ -103,7 +103,9 @@ public class PlayRangeImpl implements PlayRange {
         // frame slider range
         List<Node> list = TrackData.sliderPane.getChildren();
         list.forEach(e->((SliderFrame)e).setCommonStyle());
-        list.subList(getStart(), getEnd()+1).forEach(e->((SliderFrame)e).setActiveStyle());
+        int startIndex = Math.min(getStart(), getEnd()+1);
+        int endIndex = Math.max(getStart(), getEnd()+1);
+        list.subList(startIndex, endIndex).forEach(e->((SliderFrame)e).setActiveStyle());
     }
 
     public int getStart() {

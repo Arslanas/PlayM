@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
+import my.app.playm.controller.Dispatcher;
 import my.app.playm.model.decode.Decoder;
 import my.app.playm.model.repo.VideoRepository;
 import my.app.playm.model.repo.VideoService;
@@ -21,7 +22,7 @@ import java.util.List;
 @Component
 public class DragDropHandler {
     @Autowired
-    private VideoService videoService;
+    private Dispatcher dispatcher;
 
     public final EventHandler<DragEvent> VIDEO_DRAG_OVER = e -> {
         if (e.getDragboard().hasFiles()) e.acceptTransferModes(TransferMode.ANY);
@@ -29,7 +30,7 @@ public class DragDropHandler {
     public final EventHandler<DragEvent> VIDEO_DROP = e -> {
         List<File> files = e.getDragboard().getFiles();
         String path = files.get(0).toString();
-        videoService.decodeVideo(path);
+        dispatcher.decodeVideo(path);
     };
 
 }

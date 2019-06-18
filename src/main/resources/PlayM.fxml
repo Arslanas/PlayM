@@ -14,7 +14,7 @@
         <StackPane fx:id="centerPane" prefHeight="300.0" prefWidth="900.0" styleClass="darkBackground" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="counter" styleClass="frame-counter" text="0">
+            <Label fx:id="counter" visible="false" styleClass="frame-counter" text="0">
                <font>
                   <Font size="48.0" />
                </font>

@@ -14,9 +14,6 @@ public class FrameRemoved extends Frame {
     public int getRecoverIndex(){
         return recoverIndex;
     }
-    void addHandlers() {
-        setOnMousePressed(TrackData.framePaneHandler.FRAME_REMOVED_MOUSE_PRESSED);
-    }
 
     @Override
     public String toString() {

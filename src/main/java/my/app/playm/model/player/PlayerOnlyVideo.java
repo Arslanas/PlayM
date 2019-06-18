@@ -1,6 +1,7 @@
 package my.app.playm.model.player;
 
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j;
@@ -43,7 +44,10 @@ public class PlayerOnlyVideo implements PlayerManager {
 
     @Override
     public void setAudioPlayer(MediaPlayer audioPlayer) {
+    }
 
+    @Override
+    public void seekAudio(int seekFrame) {
     }
 
     @Override

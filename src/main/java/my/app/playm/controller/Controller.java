@@ -37,25 +37,11 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
     @FXML
     private ImageView imageView;
-
-    @FXML
-    private MediaView mediaSound;
-
     @FXML
     private BorderPane appRoot;
     @FXML
     private StackPane centerPane;
-    @FXML
-    private Label counter;
 
-    @Autowired
-    private FramePaneHandler framePaneHandler;
-    @Autowired
-    private SliderHandler sliderHandler;
-    @Autowired
-    private TotalSliderHandler totalSliderHandler;
-    @Autowired
-    private ZoomHandler zoomHandler;
     @Autowired
     private DragDropHandler dragDropHandler;
     @Autowired
@@ -63,31 +49,10 @@ public class Controller implements Initializable {
     @Autowired
     private VideoRepository videoRepository;
     @Autowired
-    private VideoService videoService;
-    @Autowired
-    private Player player;
-    @Autowired
-    private PlayRange range;
-    @Autowired
-    private Timer timer;
-    @Autowired
-    private Decoder decoder;
-    @Autowired
-    private DecoderAudio decoderAudio;
-    @Autowired
-    private MomentRepository momentRepository;
-    @Autowired
     private FrameRepository frameRepository;
     @Autowired
-    private Properties prop;
-    @Autowired
-    private HotKeyMap keyMap;
-    @Autowired
-    private TrackController trackController;
+    private Dispatcher dispatcher;
 
-    @Autowired
-    @Qualifier(value = "audioVideo")
-    private PlayerManager audioVideoManager;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -96,29 +61,17 @@ public class Controller implements Initializable {
 
     @PostConstruct
     public void init() {
+        log.debug("Post construct");
+
         Data.imageView = imageView;
         Data.appRoot = appRoot;
-        counter.setVisible(false);
 
         imageView.scaleXProperty().bind(Data.mirrorProperty);
 
-        log.debug("Post construct");
-        Data.videoRepo = videoRepository;
-        Data.frameRepo = frameRepository;
-        Data.videoService = videoService;
-        Data.player = player;
-        Data.range = range;
-        Data.timer = timer;
-        Data.decoder = decoder;
-        Data.decoderAudio = decoderAudio;
-        Data.momentRepo = momentRepository;
-        Data.prop = prop;
-        Data.keyMap = keyMap;
+        Data.dispatcher = dispatcher;
 
-        Data.frameRepo.init(TrackData.framePane, TrackData.storePane);
-        Data.videoRepo.setImageView(imageView);
-        Data.range.setOrgEnd(10);
-        player.setManager(audioVideoManager);
+        frameRepository.init(TrackData.framePane, TrackData.storePane);
+        videoRepository.setImageView(imageView);
 
         addHandlers();
     }
@@ -129,6 +82,7 @@ public class Controller implements Initializable {
 
         imageView.setOnMouseDragged(imageSliderHandler.ON_DRAGGED);
         imageView.setOnMousePressed(imageSliderHandler.ON_PRESSED);
+        imageView.setOnMouseReleased(imageSliderHandler.ON_RELEASED);
         imageView.setOnScroll(imageSliderHandler.ON_SCROLL);
     }
 

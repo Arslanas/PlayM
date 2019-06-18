@@ -1,6 +1,8 @@
 package my.app.playm.model.player;
 
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
 
 public interface PlayerManager {
     void play();
@@ -10,6 +12,8 @@ public interface PlayerManager {
     void pause();
 
     boolean isPlaying();
+
+    void seekAudio(int seekFrame);
 
     void updateAudio();
 

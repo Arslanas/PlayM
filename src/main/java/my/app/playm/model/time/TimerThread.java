@@ -1,11 +1,13 @@
 package my.app.playm.model.time;
 
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
 import my.app.playm.controller.Dispatcher;
 import my.app.playm.model.decode.DecoderAudio;
 import my.app.playm.model.player.PlaybackMode;
+import my.app.playm.model.player.Player;
 import my.app.playm.model.repo.FrameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,8 @@ public class TimerThread implements Timer {
     private DecoderAudio decoderAudio;
     @Autowired
     private FrameRepository frameRepository;
+    @Autowired
+    private Player player;
 
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     // process is for cancelling playback
@@ -49,14 +53,14 @@ public class TimerThread implements Timer {
         if (Data.currentFrame % Data.frameStep != 0) return;
 
 
-        Dispatcher.updateFrame(Data.currentFrame);
+        Data.dispatcher.updateFrame(Data.currentFrame);
     };
     private Runnable playBackward = () -> {
         // return back to start frame if reaches the end frame (looping playback)
         if (--Data.currentFrame < 0) Data.currentFrame = frameRepository.size() - 1;
         if (Data.currentFrame % Data.frameStep != 0) return;
 
-        Dispatcher.updateFrame(Data.currentFrame);
+        Data.dispatcher.updateFrame(Data.currentFrame);
     };
 
     private Runnable launcher = playForward;
@@ -74,8 +78,7 @@ public class TimerThread implements Timer {
     @Override
     public void reset() {
         Data.currentFrame = range.getStart();
-        MediaPlayer audioPlayer = Data.player.getAudioPlayer();
-        if (decoderAudio.isAudio()) audioPlayer.seek(audioPlayer.getStartTime());
+        if (decoderAudio.isAudio()) player.seekAudio(Data.currentFrame);
         log.debug(String.format("Reset to %d frame", Data.currentFrame));
     }
 

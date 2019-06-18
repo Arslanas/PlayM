@@ -22,7 +22,6 @@ public class SliderFrame extends AnchorPane {
         addId();
         buildView();
         buildStyle();
-        addHandlers();
     }
     public Label getLabel(){
         return label;
@@ -40,9 +39,6 @@ public class SliderFrame extends AnchorPane {
         setId("sliderFrame_"+num);
         label.setId("slider-frame-label-"+num);
         line.setId("slider-frame-line-"+num);
-    }
-    private void addHandlers() {
-        setOnMousePressed(TrackData.sliderHandler.ON_SLIDER_PRESSED);
     }
 
     private void buildView() {

@@ -64,12 +64,12 @@
                 <Insets bottom="10.0" top="10.0" />
             </padding>
         </VBox>
-        <AnchorPane fx:id="markLine" layoutY="104.0" mouseTransparent="true" prefHeight="133.0" prefWidth="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="104.0">
+        <AnchorPane fx:id="markLine" layoutY="107.0" mouseTransparent="true" prefHeight="130.0" prefWidth="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="107.0">
             <children>
                 <AnchorPane prefWidth="3.0" styleClass="track-mark-line" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                 <AnchorPane prefWidth="3.0" styleClass="track-mark-line" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="videoModeCover" layoutY="89.0" mouseTransparent="true" prefHeight="111.0" prefWidth="500.0" styleClass="video-mode-cover" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
+      <AnchorPane fx:id="videoModeCover" layoutY="89.0" mouseTransparent="true" prefHeight="111.0" prefWidth="500.0" styleClass="video-mode-cover" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="107.0" />
     </children>
 </AnchorPane>

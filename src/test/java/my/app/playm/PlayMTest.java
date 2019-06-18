@@ -27,6 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayMTest extends ApplicationTest {
     ConfigurableApplicationContext context ;
     @Autowired
+    private Dispatcher dispatcher;
+    @Autowired
     private ControllerConfig.View view;
 
     @Override
@@ -43,14 +45,13 @@ public class PlayMTest extends ApplicationTest {
         stage.centerOnScreen();
 
         stage.show();
-        Dispatcher.onSceneLoaded(scene, stage);
-        Util.loadSequence();
+        dispatcher.onSceneLoaded(scene, stage);
+        dispatcher.loadSequence(20);
     }
     @Override
     public void stop() throws Exception {
-        Data.timer.close();
+        dispatcher.closeApp();
         super.stop();
-        context.close();
     }
     @Before
     public void setUp() throws Exception {

@@ -88,8 +88,6 @@ public class TrackController implements Initializable {
     @PostConstruct
     public void init() {
         log.debug("Post construct");
-        TrackData.framePaneHandler = framePaneHandler;
-        TrackData.sliderHandler = sliderHandler;
         addHandlers();
     }
 
