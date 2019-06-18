@@ -24,8 +24,6 @@ public class PlayM extends Application {
     @Autowired
     private Timer timer;
     @Autowired
-    private TrackController trackController;
-    @Autowired
     private Properties props;
     @Autowired
     private VideoService videoService;
@@ -68,7 +66,6 @@ public class PlayM extends Application {
         stage.setTitle("PlayM");
         stage.setScene(scene);
         stage.centerOnScreen();
-        trackController.addHandlers();
         stage.show();
         return scene;
     }

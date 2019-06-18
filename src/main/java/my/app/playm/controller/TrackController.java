@@ -88,9 +88,9 @@ public class TrackController implements Initializable {
     @PostConstruct
     public void init() {
         log.debug("Post construct");
-        log.debug(framePaneHandler);
         TrackData.framePaneHandler = framePaneHandler;
         TrackData.sliderHandler = sliderHandler;
+        addHandlers();
     }
 
     private void initData() {
@@ -128,7 +128,7 @@ public class TrackController implements Initializable {
         Data.volumeProperty.bind(soundSlider.valueProperty());
     }
 
-    public void addHandlers() {
+    private void addHandlers() {
         TrackData.sliderPaneTop.addEventFilter(MouseEvent.MOUSE_DRAGGED, zoomHandler.ZOOM_ON_MOUSE_DRAGGED);
         TrackData.sliderPaneTop.addEventFilter(MouseEvent.MOUSE_RELEASED, zoomHandler.ZOOM_ON_MOUSE_RELEASED);
         TrackData.framePaneTop.addEventFilter(MouseEvent.MOUSE_PRESSED, zoomHandler.ZOOM_ON_MOUSE_PRESSED);
