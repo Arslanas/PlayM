@@ -4,10 +4,9 @@
 * [Usage](#usage)
 * [Contact](#contact)
 ## About The Project
-The main purpose of this application is to help in analyze of character motion for 3d animator. Key feature is easy to use managing of video frames - adding extra empty frames and removing bad looking frames, while keeping information about made changes.
+The main purpose of this application is to help in analyze of character motion for 3d animator. Key feature is easy to use managing of video frames - adding extra empty frames and removing bad looking frames, while keeping information about changes.
 It will be helpfull for animator to get correct `timing` and `spacing` - terms, that are fundamental for animation. Further improvement of animation in 3d scene, is based on information about changes that was been made.
 
-Due to playblasts are almost never more than 15 seconds, application is supposed to be used only for short videos (playblasts).
 
 ### Demo
 <div align="center">
@@ -16,7 +15,16 @@ Due to playblasts are almost never more than 15 seconds, application is supposed
 
 
 ### Built with
-Application uses `Spring Boot` and `JavaFX`. 
+*   `Spring Boot`
+*   `Spring AOP`
+*   `JavaFX`
+*   `Xuggler`
+*   `TestFX` 
+
+
+    
+    
+### Usage
 
 At the current moment application has also such features as:
 
@@ -31,11 +39,11 @@ At the current moment application has also such features as:
 *    drag&drop video file
     
 *    undo
-    
-    
-### Usage
+
 All commands are assigned to keyboard keys. The list of features and assigned hotkeys is possible to get by pressing `F1`. Information will be written to console.
 Application is still in development, but it is already okay for using. 
+
+Due to playblasts are almost never more than 15 seconds, application is supposed to be used only for short videos (playblasts).
 
 For now only supported format is `mov`. I am planning to continue working on current application and in a future I will add more supported formats.
 
