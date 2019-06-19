@@ -12,11 +12,9 @@ Due to playblasts are almost never more than 15 seconds, application is supposed
 
 ###Demo
 <div align="center">
-
-<iframe
- width="560" height="315" src="https://www.youtube.com/embed/ksk8PmWISeY" ></iframe>
-
+ <a href="https://www.youtube.com/watch?v=ksk8PmWISeY"><img src="https://img.youtube.com/vi/ksk8PmWISeY/1.jpg" alt="IMAGE ALT TEXT" width="560" height="315"></a>
 </div>
+
 ###Built with
 Application uses `Spring Boot` and `JavaFX`. 
 
