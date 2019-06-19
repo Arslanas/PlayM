@@ -9,12 +9,13 @@ It will be helpfull for animator to get correct `timing` and `spacing` - terms, 
 
 Due to playblasts are almost never more than 15 seconds, application is supposed to be used only for short videos (playblasts).
 
-###Demo
+### Demo
 <div align="center">
  <a href="https://www.youtube.com/watch?v=ksk8PmWISeY"><img src="https://i.postimg.cc/4yzSHqzB/Play-M-thumbnail.jpg" alt="PlayM demo" width="560" height="315"></a>
 </div>
 
-###Built with
+
+### Built with
 Application uses `Spring Boot` and `JavaFX`. 
 
 At the current moment application has also such features as:
@@ -32,7 +33,7 @@ At the current moment application has also such features as:
 *    undo
     
     
-###Usage
+### Usage
 All commands are assigned to keyboard keys. The list of features and assigned hotkeys is possible to get by pressing `F1`. Information will be written to console.
 Application is still in development, but it is already okay for using. 
 
@@ -40,7 +41,7 @@ For now only supported format is `mov`. I am planning to continue working on cur
 
 I am planning to add more important features like drawing upon video, `ghost` function on drawn frames and other...
 
-###Installation
+### Installation
 Archive with sample playblasts and sequence of images you can download from [here](https://drive.google.com/open?id=1ZvIx35oriZtv5wtaGvU4Hx-YVghOmUvW).
 Copy folder `assets` from archive to `resources`. 
 UI test are using`assets/sample` folder for searching images.
