@@ -11,8 +11,11 @@ It will be helpfull for animator to get correct `timing` and `spacing` - terms, 
 Due to playblasts are almost never more than 15 seconds, application is supposed to be used only for short videos (playblasts).
 
 ###Demo
+<div align="center">
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ksk8PmWISeY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+</div>
 ###Built with
 Application uses `Spring Boot` and `JavaFX`. 
 
