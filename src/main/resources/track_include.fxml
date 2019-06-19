@@ -14,7 +14,7 @@
 
 <AnchorPane fx:id="trackRoot" prefWidth="500.0" stylesheets="@styles/track_style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="my.app.playm.controller.TrackController">
     <children>
-        <VBox fx:id="vbox" alignment="CENTER" spacing="10.0" styleClass="darkBackground" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+        <VBox fx:id="vbox" alignment="CENTER" spacing="4.0" styleClass="darkBackground" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
             <children>
             <AnchorPane prefHeight="25.0">
                <children>
@@ -47,12 +47,18 @@
                             </children>
                         </AnchorPane>
                     </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
                 </AnchorPane>
                 <AnchorPane fx:id="framePaneTop" maxHeight="-Infinity" prefHeight="45.0">
                     <children>
                         <AnchorPane fx:id="framePaneColor" styleClass="track-frame" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <AnchorPane fx:id="framePane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
                 </AnchorPane>
                 <AnchorPane fx:id="storeLinePane" styleClass="track-line">
                     <children>
@@ -60,16 +66,13 @@
                     </children>
                 </AnchorPane>
             </children>
-            <padding>
-                <Insets bottom="10.0" top="10.0" />
-            </padding>
         </VBox>
-        <AnchorPane fx:id="markLine" layoutY="107.0" mouseTransparent="true" prefHeight="130.0" prefWidth="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="107.0">
+        <AnchorPane fx:id="markLine" layoutY="93.0" mouseTransparent="true" prefHeight="110.0" prefWidth="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="93.0">
             <children>
                 <AnchorPane prefWidth="3.0" styleClass="track-mark-line" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                 <AnchorPane prefWidth="3.0" styleClass="track-mark-line" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="videoModeCover" layoutY="89.0" mouseTransparent="true" prefHeight="111.0" prefWidth="500.0" styleClass="video-mode-cover" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="107.0" />
+      <AnchorPane fx:id="videoModeCover" layoutY="93.0" mouseTransparent="true" prefHeight="100.0" prefWidth="500.0" styleClass="video-mode-cover" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="93.0" />
     </children>
 </AnchorPane>

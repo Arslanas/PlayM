@@ -30,7 +30,7 @@
 }
 
 .track-mark-line{
-    -fx-background-color: linear-gradient(to top, rgba(18, 20, 19, 0.78), rgba(226, 228, 247, 0.11))
+    -fx-background-color: linear-gradient(to top, rgba(230, 230, 230, 0.78), rgba(20, 20, 21, 0.74))
 }
 .track-slider-control{
     -fx-background-color: rgba(223, 223, 223, 0.4);
@@ -57,18 +57,25 @@
 }
 /* .track-zoom*/
 
-
+* {
+    -framePane: #273039;
+    -frameA: #757575;
+    -frameB: #585858;
+}
 
 /* .track-keyframe*/
 .track-keyframe-pane-frame{
-    -fx-background-color: #273039;
+    -fx-background-color: -framePane;
 }
 .track-keyframe-pane-frame:hover {
-    -fx-background-color: #5c7181;
+    -fx-background-color: derive(-framePane, 30%);
 }
 
 .track-keyframe-pane-inner-frame{
-    -fx-background-color: linear-gradient(to bottom, #636363, #7e7e7e);
+    -fx-background-color: linear-gradient(to bottom, -frameA, -frameB);
+}
+.track-frameRemoved-pane-inner-frame{
+    -fx-background-color: linear-gradient(to bottom, derive(-frameA, -30%), derive(-frameB, -30%));
 }
 
 .track-keyframe-label-frame{
@@ -96,10 +103,9 @@
 /* .track-storeLine*/
 
 .track-line{
-    -fx-background-color: linear-gradient(to bottom, #616164, #101016)
+    -fx-background-color: linear-gradient(to top, #545456, rgba(16, 16, 22, 0))
 }
 .track-line:hover{
-    -fx-background-color: linear-gradient(to bottom, #828286, #323245)
 }
 
 /* .track-storeLine*/

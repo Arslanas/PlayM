@@ -6,13 +6,15 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import lombok.Data;
+import lombok.Getter;
 import my.app.playm.model.repo.FrameRepository;
 
+@Data
 public class Frame extends AnchorPane {
-    final Pane innerPane;
-    final Label label;
+    private final Pane innerPane;
+    private final Label label;
     private boolean empty;
-    private static int emptyFrameId = -1000;
 
     private final int num;
 
@@ -20,85 +22,15 @@ public class Frame extends AnchorPane {
         this.num = num;
         innerPane = new Pane();
         label = new Label(num + "");
-        addId();
-        buildView();
-        buildStyle();
     }
-
-    public Frame(int num, boolean isEmpty) {
-        this(num);
-        if (isEmpty) buildEmpty();
-    }
-
-    private void buildEmpty() {
-        empty = true;
-        setId("emptyFrame_" + emptyFrameId--);
-        setMouseTransparent(true);
-        innerPane.setMouseTransparent(true);
-        label.setMouseTransparent(true);
-        setVisible(false);
-    }
-
-    private void addId() {
-        setId("frame_" + num);
-        innerPane.setId("track-keyframe-innerPane-" + num);
-        label.setId("track-keyframe-label-" + num);
-    }
-
-
-    private void buildView() {
-        label.setMouseTransparent(true);
-        AnchorPane.setBottomAnchor(this, .0);
-        AnchorPane.setTopAnchor(this, .0);
-        prefWidthProperty().bind(FrameRepository.frameWidth);
-        createAnchor(innerPane, 5);
-        createAnchor(label, 0);
-        getChildren().add(innerPane);
-        getChildren().add(label);
-        label.setTextOverrun(OverrunStyle.CLIP);
-    }
-
-    private void buildStyle() {
-        getStyleClass().add("track-keyframe-pane-frame");
-        innerPane.getStyleClass().add("track-keyframe-pane-inner-frame");
-        label.getStyleClass().add("track-keyframe-label-frame");
-        label.setFont(new Font(12));
-    }
-
-    private void createAnchor(Node node, double value) {
-        AnchorPane.setLeftAnchor(node, value);
-        AnchorPane.setRightAnchor(node, value);
-        AnchorPane.setTopAnchor(node, value);
-        AnchorPane.setBottomAnchor(node, value);
-    }
-
-    public Label getLabel() {
-        return label;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-
-    public boolean isEmpty() {
-        return empty;
-    }
-
-    @Override
-    public String toString() {
-        return "Frame{" +
-                " num = " + num +
-                ", empty = " + empty + " }";
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof Frame)) return false;
+        if (o == null) return false;
+        if (!(o instanceof Frame)) return false;
         Frame frame = (Frame) o;
-        if(!getId().equals(frame.getId())) return  false;
-        if(empty != frame.empty)return false;
+        if (!getId().equals(frame.getId())) return false;
+        if (empty != frame.empty) return false;
         return num == frame.num;
     }
 

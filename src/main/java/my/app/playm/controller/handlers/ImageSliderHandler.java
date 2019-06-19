@@ -10,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
-import my.app.playm.controller.Dispatcher;
 import my.app.playm.controller.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,9 +40,9 @@ public class ImageSliderHandler {
     public final EventHandler<MouseEvent> ON_DRAGGED = e -> {
         double delta = e.getSceneX() - press;
         if (e.isAltDown()) {
-            if (e.isPrimaryButtonDown()) pan(e);
-            if (e.isMiddleButtonDown()) zoomHandler.doPan(delta);
-            if (e.isSecondaryButtonDown()) zoomImage(e);
+            if (e.isPrimaryButtonDown()) zoomHandler.doPan(delta);
+            if (e.isMiddleButtonDown()) panView(e);
+            if (e.isSecondaryButtonDown()) zoomView(e);
             return;
         }
         playVideo(delta);
@@ -55,7 +54,7 @@ public class ImageSliderHandler {
     private double scalePress = 1;
     private double deltaPrev = 0;
 
-    private void zoomImage(MouseEvent e) {
+    private void zoomView(MouseEvent e) {
         ImageView view = Data.imageView;
         Rectangle2D viewport = view.getViewport();
 
@@ -122,7 +121,7 @@ public class ImageSliderHandler {
         view.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
     };
 
-    private void pan(MouseEvent e) {
+    private void panView(MouseEvent e) {
         ImageView view = Data.imageView;
         Point2D dragPoint = imageViewToImage(view, new Point2D(e.getX(), e.getY()));
         shift(view, dragPoint.subtract(mouseDown.get()));

@@ -23,6 +23,7 @@ public class FramePaneHandler {
     private int pressedFrameIndex, shift, closestNonEmptyIndex;
     private int pressedFrameNum;
     private boolean isFramePressed;
+
     @Autowired
     private FrameRepository frameRepository;
 

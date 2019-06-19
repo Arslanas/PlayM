@@ -1,28 +1,19 @@
 package my.app.playm.controller;
 
 import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import my.app.playm.PlayM;
-import my.app.playm.entity.frame.FrameProducer;
+import my.app.playm.model.repo.*;
 import my.app.playm.entity.frame.ImageFrame;
-import my.app.playm.entity.frame.SliderFrame;
 import my.app.playm.model.player.Player;
 import my.app.playm.model.player.PlayerOnlyVideo;
-import my.app.playm.model.repo.FrameRepository;
-import my.app.playm.model.repo.VideoRepository;
-import my.app.playm.model.repo.VideoService;
 import my.app.playm.model.time.PlayRange;
 import my.app.playm.model.time.Timer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +30,7 @@ public class Dispatcher {
     private final VideoService videoService;
     private final VideoRepository videoRepo;
     private final FrameRepository frameRepo;
-    private final FrameProducer frameProducer;
+    private final FrameFabric frameFabric;
     private final HotKeyMap keyMap;
     private final Properties prop;
     private final Timer timer;
@@ -83,7 +74,7 @@ public class Dispatcher {
         videoRepo.add(frame);
         Platform.runLater(() -> {
             frameRepo.add(frame.getNum());
-            TrackData.sliderPane.getChildren().add(frameProducer.createSliderFrame(frame.getNum()));
+            TrackData.sliderPane.getChildren().add(frameFabric.createSliderFrame(frame.getNum()));
             if (frame.getNum() == 0) Data.imageView.setImage(frame.getImage());
         });
         log.debug("New frame decoded- " + frame.getNum());
@@ -104,7 +95,7 @@ public class Dispatcher {
             ImageFrame imageFrame = new ImageFrame(debugImage, i);
             videoRepo.add(imageFrame);
             frameRepo.add(imageFrame.getNum());
-            TrackData.sliderPane.getChildren().add(frameProducer.createSliderFrame(i));
+            TrackData.sliderPane.getChildren().add(frameFabric.createSliderFrame(i));
             if (i == 0) Data.imageView.setImage(imageFrame.getImage());
         });
         onCompleteNewVideo();
@@ -152,7 +143,7 @@ public class Dispatcher {
         int newSize = frameRepo.size();
         if (oldSize != newSize) {
             if (newSize > sliderList.size()) {
-                while (sliderList.size() != newSize) sliderList.add(frameProducer.createSliderFrame(sliderList.size()));
+                while (sliderList.size() != newSize) sliderList.add(frameFabric.createSliderFrame(sliderList.size()));
             } else {
                 while (sliderList.size() != newSize) sliderList.remove(sliderList.size() - 1);
             }
