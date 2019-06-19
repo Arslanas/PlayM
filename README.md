@@ -55,4 +55,4 @@ Copy folder `assets` from archive to `resources`.
 UI tests are using`assets/sample` folder for searching images.
 
 ### Contact
-Arslan - [ovezberdyevarslan@gmail.com]()
+Arslan - [ovezberdyevarslan@gmail.com](mailto:ovezberdyevarslan@gmail.com)
