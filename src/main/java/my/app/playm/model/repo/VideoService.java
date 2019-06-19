@@ -8,4 +8,5 @@ public interface VideoService {
     void export(String target);
 
     void decodeAudio(String source);
+    int getFrameRate();
 }

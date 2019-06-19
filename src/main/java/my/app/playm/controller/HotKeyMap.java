@@ -46,9 +46,11 @@ public class HotKeyMap {
         map.put("3", new Command("frameStep = 3", () -> Data.frameStep = 3));
         map.put("4", new Command("frameStep = 4", () -> Data.frameStep = 4));
         map.put("8", new Command("frameStep = 8", () -> Data.frameStep = 8));
-        map.put("9", new Command("Change speed to original", () -> changeSpeed(Data.framerate)));
-        map.put("Subtract", new Command("Reduce speed", () -> changeSpeed((int) (Data.framerate / 1.2))));
-        map.put("Add", new Command("Increase speed", () -> changeSpeed((int) (Data.framerate * 1.2))));
+
+        map.put("9", new Command("Change speed to original", () -> changeSpeed(videoService.getFrameRate())));
+        map.put("Subtract", new Command("Reduce speed", () -> changeSpeed((Data.framerate - 2))));
+        map.put("Add", new Command("Increase speed", () -> changeSpeed((Data.framerate + 2))));
+
         map.put("Delete", new Command("Delete frame and shift", () -> frameRepo.remove(Data.currentFrame)));
         map.put("Backspace", new Command("Delete frame", () -> deleteFrame()));
         map.put("F1", new Command("Help", () -> hotkeyHelp()));
@@ -61,7 +63,7 @@ public class HotKeyMap {
         map.put("Space", new Command("Play and pause", () -> playPause()));
         map.put("B", new Command("Play and stop", () -> playStop()));
 
-        mapCtrl.put("Z", new Command("SaveMoment", () -> momentRepo.restoreState()));
+        mapCtrl.put("Z", new Command("Undo", () -> momentRepo.restoreState()));
 
         mapShift.put("E", new Command("Sound reduce", () -> TrackData.soundSlider.decrement()));
         mapShift.put("R", new Command("Sound increase", () -> TrackData.soundSlider.increment()));
@@ -123,7 +125,9 @@ public class HotKeyMap {
     }
 
     private void changeSpeed(int i) {
+        if (i <= 0) i = 1;
         Data.framerate = i;
+        log.debug(Data.framerate);
         restartPlay();
     }
 

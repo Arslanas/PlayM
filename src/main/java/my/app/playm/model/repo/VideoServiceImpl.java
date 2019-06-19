@@ -5,7 +5,6 @@ import javafx.scene.media.MediaPlayer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
-import my.app.playm.controller.Dispatcher;
 import my.app.playm.controller.Properties;
 import my.app.playm.model.decode.Decoder;
 import my.app.playm.model.decode.DecoderAudio;
@@ -13,7 +12,6 @@ import my.app.playm.model.decode.Exporter;
 import my.app.playm.model.player.Player;
 import my.app.playm.model.player.PlayerAudioVideo;
 import my.app.playm.model.player.PlayerOnlyVideo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
@@ -71,5 +69,10 @@ public class VideoServiceImpl implements VideoService{
         });
         player.setAudioPlayer(audioPlayer);
 
+    }
+
+    @Override
+    public int getFrameRate() {
+        return decoder.getFrameRate(Data.videoSource);
     }
 }

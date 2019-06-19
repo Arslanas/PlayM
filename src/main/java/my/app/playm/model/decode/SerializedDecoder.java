@@ -38,7 +38,7 @@ public class SerializedDecoder implements Decoder {
     }
 
     @Override
-    public String getFrameRate(String source) {
+    public int getFrameRate(String source) {
         throw new UnsupportedOperationException();
     }
 }

@@ -10,5 +10,5 @@ public interface Decoder {
     List<BufferedImage> decode(String source);
     List<ImageFrame> decodeImages(String source);
     void decodeAndEvent(String source);
-    String getFrameRate(String source);
+    int getFrameRate(String source);
 }

@@ -31,12 +31,12 @@ public class XugglerDecoder implements Decoder {
     }
 
     @Override
-    public String getFrameRate(String source) {
+    public int getFrameRate(String source) {
         IContainer container = getContainer(source);
         // !!!!write proper method for getting video stream
         IStream stream = getVideoStream(container);
         IStreamCoder videoCoder = getStreamCoder(stream);
-        return videoCoder.getFrameRate().toString();
+        return (int)videoCoder.getFrameRate().getValue();
     }
 
     @Override
