@@ -3,7 +3,6 @@
 * [Installation](#installation)
 * [Usage](#usage)
 * [Contact](#contact)
-[![Play-M-thumbnail.jpg](https://i.postimg.cc/4yzSHqzB/Play-M-thumbnail.jpg)](https://postimg.cc/7JZVpBt2)
 ## About The Project
 The main purpose of this application is to help in analyze of character motion for 3d animator. Key feature is easy to use managing of video frames - adding extra empty frames and removing bad looking frames, while keeping information about made changes.
 It will be helpfull for animator to get correct `timing` and `spacing` - terms, that are fundamental for animation. Further improvement of animation in 3d scene, is based on information about changes that was been made.
@@ -11,9 +10,8 @@ It will be helpfull for animator to get correct `timing` and `spacing` - terms, 
 Due to playblasts are almost never more than 15 seconds, application is supposed to be used only for short videos (playblasts).
 
 ###Demo
-<div align="center">
- <a href="https://www.youtube.com/watch?v=ksk8PmWISeY"><img src="https://img.youtube.com/vi/ksk8PmWISeY/1.jpg" alt="IMAGE ALT TEXT" width="560" height="315"></a>
-</div>
+
+[![Play-M-thumbnail.jpg](https://i.postimg.cc/4yzSHqzB/Play-M-thumbnail.jpg)](https://postimg.cc/7JZVpBt2)
 
 ###Built with
 Application uses `Spring Boot` and `JavaFX`. 
