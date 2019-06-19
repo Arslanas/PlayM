@@ -41,7 +41,7 @@ At the current moment application has also such features as:
 *    undo
 
 All commands are assigned to keyboard keys. The list of features and assigned hotkeys is possible to get by pressing `F1`. Information will be written to console.
-Application is still in development, but it is already okay for using. 
+Application is still in development, but it is ready for use. 
 
 Due to playblasts are almost never more than 15 seconds, application is supposed to be used only for short videos (playblasts).
 
@@ -52,7 +52,7 @@ I am planning to add more important features like drawing upon video, `ghost` fu
 ### Installation
 Archive with sample playblasts and sequence of images you can download from [here](https://drive.google.com/open?id=1ZvIx35oriZtv5wtaGvU4Hx-YVghOmUvW).
 Copy folder `assets` from archive to `resources`. 
-UI test are using`assets/sample` folder for searching images.
+UI tests are using`assets/sample` folder for searching images.
 
 ### Contact
 Arslan - [ovezberdyevarslan@gmail.com]()
