@@ -10,8 +10,9 @@ It will be helpfull for animator to get correct `timing` and `spacing` - terms, 
 Due to playblasts are almost never more than 15 seconds, application is supposed to be used only for short videos (playblasts).
 
 ###Demo
-
-[![Play-M-thumbnail.jpg](https://i.postimg.cc/4yzSHqzB/Play-M-thumbnail.jpg)](https://postimg.cc/7JZVpBt2)
+<div align="center">
+ <a href="https://www.youtube.com/watch?v=ksk8PmWISeY"><img src="https://i.postimg.cc/4yzSHqzB/Play-M-thumbnail.jpg" alt="PlayM demo" width="560" height="315"></a>
+</div>
 
 ###Built with
 Application uses `Spring Boot` and `JavaFX`. 
