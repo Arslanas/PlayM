@@ -4,9 +4,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import my.app.playm.controller.TrackData;
-import my.app.playm.controller.handlers.FramePaneHandler;
 
 @Data
 public class FrameRemoved extends AnchorPane {

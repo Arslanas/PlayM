@@ -1,14 +1,9 @@
 package my.app.playm.entity.frame;
 
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import lombok.Data;
-import lombok.Getter;
-import my.app.playm.model.repo.FrameRepository;
 
 @Data
 public class Frame extends AnchorPane {
