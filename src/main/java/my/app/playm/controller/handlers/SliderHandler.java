@@ -6,9 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import lombok.extern.log4j.Log4j;
 import my.app.playm.controller.Data;
-import my.app.playm.controller.Dispatcher;
 import my.app.playm.entity.frame.SliderFrame;
-import my.app.playm.model.player.Player;
 import my.app.playm.model.repo.FrameRepository;
 import my.app.playm.model.time.PlayRange;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +19,6 @@ public final class SliderHandler {
     private FrameRepository frameRepository;
     @Autowired
     private PlayRange range;
-    @Autowired
-    private Player player;
 
     private int orgPressSceneX, shift, orgIndex;
 
@@ -40,7 +36,6 @@ public final class SliderHandler {
         }
 
         Data.dispatcher.updateFrame(sliderFrame.getNum());
-        player.playSound(sliderFrame.getNum());
     };
 
 
@@ -63,7 +58,6 @@ public final class SliderHandler {
         }
 
         Data.dispatcher.updateFrame(frameNum);
-        player.playSound(frameNum);
     };
 
     private int boundIndex(int currentIndex) {

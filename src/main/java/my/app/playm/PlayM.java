@@ -11,6 +11,7 @@ import my.app.playm.controller.TrackController;
 import my.app.playm.controller.Util;
 import my.app.playm.model.repo.VideoService;
 import my.app.playm.model.time.Timer;
+import my.app.playm.socket.PlayServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +23,7 @@ public class PlayM extends Application {
     private static String[] savedArgs;
     private ConfigurableApplicationContext context;
     @Autowired
-    private Timer timer;
+    private PlayServer playServer;
     @Autowired
     private Properties props;
     @Autowired
@@ -34,6 +35,8 @@ public class PlayM extends Application {
     public void start(Stage stage) throws Exception {
         context = SpringApplication.run(getClass(), savedArgs);
         context.getAutowireCapableBeanFactory().autowireBean(this);
+
+        playServer.start();
 
         Scene scene = setupAndShowScene(stage);
 

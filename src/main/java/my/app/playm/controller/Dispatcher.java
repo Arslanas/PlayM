@@ -8,12 +8,14 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import my.app.playm.model.decode.DecoderAudio;
 import my.app.playm.model.repo.*;
 import my.app.playm.entity.frame.ImageFrame;
 import my.app.playm.model.player.Player;
 import my.app.playm.model.player.PlayerOnlyVideo;
 import my.app.playm.model.time.PlayRange;
 import my.app.playm.model.time.Timer;
+import my.app.playm.socket.PlayServer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -33,8 +35,10 @@ public class Dispatcher {
     private final FrameFabric frameFabric;
     private final HotKeyMap keyMap;
     private final Properties prop;
+    private final DecoderAudio decoderAudio;
     private final Timer timer;
     private final Player player;
+    private final PlayServer playServer;
     private final PlayRange range;
     private final ConfigurableApplicationContext context;
 
@@ -45,10 +49,15 @@ public class Dispatcher {
         range.update();
         updateFrame(Data.currentFrame);
     }
-
+    public void resetTime(){
+        Data.currentFrame = range.getStart();
+        if (decoderAudio.isAudio()) player.seekAudio(Data.currentFrame);
+        log.debug(String.format("Reset to %d frame", Data.currentFrame));
+    }
     public void updateFrame(int frameNum) {
         updateFrameBase(frameNum);
         TrackData.sliderControl.setTranslateX(Data.currentFrame * FrameRepository.frameWidth.get());
+        player.playSound(frameNum);
     }
 
     public void updateFrame(int frameNum, boolean updateSlider) {
@@ -82,6 +91,7 @@ public class Dispatcher {
 
     public void closeApp() {
         timer.close();
+        playServer.stop();
         context.close();
         log.debug("Application closed");
     }
