@@ -12,11 +12,7 @@ import java.util.LinkedList;
 @Component
 public class MomentDeque implements MomentRepository {
     @Autowired
-    @Qualifier("FrameRepository")
     MomentOriginator frameRepo;
-    @Autowired
-    @Qualifier("VideoRepository")
-    MomentOriginator videoRepo;
 
     private final Deque<Moment> deque = new LinkedList<>();
 
@@ -33,7 +29,6 @@ public class MomentDeque implements MomentRepository {
     @Override
     public void saveState() {
         Moment moment = new Moment();
-        videoRepo.saveMoment(moment);
         frameRepo.saveMoment(moment);
         save(moment);
     }
@@ -43,6 +38,5 @@ public class MomentDeque implements MomentRepository {
         Moment moment = get();
         if (moment == null) return;
         frameRepo.restoreMoment(moment);
-        videoRepo.restoreMoment(moment);
     }
 }

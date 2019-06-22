@@ -20,13 +20,23 @@ After each change in UI frames, we should call synchronize()
  */
 @Log4j
 @Component("VideoRepository")
-public class VideoRepositoryImpl implements VideoRepository, MomentOriginator {
+public class VideoRepositoryImpl implements VideoRepository{
     private ImageView imageView;
     private final List<ImageFrame> list = new ArrayList<>();
     private List<ImageFrame> listOriginal;
 
     public VideoRepositoryImpl() {
     }
+
+    @Override
+    public List<ImageFrame> getOriginalList() {
+        return new ArrayList<>(listOriginal);
+    }
+    @Override
+    public void setOriginalList(List<ImageFrame> list) {
+        listOriginal = list;
+    }
+
     @Override
     public void synchronize(List<Frame> frameList) {
         clear();
@@ -45,15 +55,6 @@ public class VideoRepositoryImpl implements VideoRepository, MomentOriginator {
         int num = frame.getNum();
         if (frame.isEmpty()) list.set(index, new ImageFrame(listOriginal.get(num), true));
         list.set(index, new ImageFrame(listOriginal.get(num)));
-    }
-    @Override
-    public void saveMoment(Moment moment) {
-        moment.setListImages(new ArrayList<>(list));
-    }
-    @Override
-    public void restoreMoment(Moment moment) {
-        list.clear();
-        list.addAll(moment.getListImages());
     }
     @Override
     public void saveOriginalImages() {

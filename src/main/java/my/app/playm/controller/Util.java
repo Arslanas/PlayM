@@ -47,4 +47,7 @@ public class Util {
             //stage.setMaximized(true);
         }
     }
+    public static String getImagePath(int num){
+        return String.format("view_%s.jpg", num);
+    }
 }

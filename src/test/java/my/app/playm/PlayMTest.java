@@ -12,6 +12,7 @@ import my.app.playm.entity.frame.Frame;
 import my.app.playm.entity.frame.FrameRemoved;
 import my.app.playm.entity.frame.SliderFrame;
 import my.app.playm.model.repo.FrameRepository;
+import my.app.playm.socket.PlayServer;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;

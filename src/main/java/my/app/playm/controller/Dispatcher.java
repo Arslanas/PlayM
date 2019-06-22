@@ -16,11 +16,13 @@ import my.app.playm.model.player.PlayerOnlyVideo;
 import my.app.playm.model.time.PlayRange;
 import my.app.playm.model.time.Timer;
 import my.app.playm.socket.PlayServer;
+import my.app.playm.socket.RequestRange;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -41,6 +43,43 @@ public class Dispatcher {
     private final PlayServer playServer;
     private final PlayRange range;
     private final ConfigurableApplicationContext context;
+
+    public static void main(String[] args) {
+        Image image = new Image(Paths.get("D:\\temp\\PlayM\\maya\\samples\\view_20.jpg").toUri().toString());
+        System.out.println(image);
+    }
+    private List<ImageFrame> loadImages(RequestRange range){
+        Path imageFolder = Paths.get(range.getPath());
+        List<ImageFrame> list = new ArrayList<>();
+        IntStream.range(range.getStart(), range.getEnd())
+                .mapToObj(num-> {
+                    String uriPath = imageFolder.resolve(Util.getImagePath(num)).toUri().toString();
+                    Image image = new Image(uriPath, Data.imageWidth.get(), Data.imageHeight.get(), true, false);
+                    return new ImageFrame(image, num);
+                })
+                .forEach(list::add);
+        return list;
+    };
+    public void update(RequestRange range){
+        // load images from given range
+        List<ImageFrame> newImageFrameList = loadImages(range);
+        //get original
+        List<ImageFrame> originalList = videoRepo.getOriginalList();
+        // change images in original
+        List<ImageFrame> listRemove = originalList.subList(range.getStart(), range.getEnd());
+        originalList.removeAll(listRemove);
+        originalList.addAll(range.getStart(), newImageFrameList);
+        //save new original
+        videoRepo.setOriginalList(originalList);
+
+        updateAll();
+        log.debug("Updated succeeded");
+        /*
+        save images from path to VideoRepo original list
+        save original list to moment repo
+        update view
+         */
+    }
 
     public void updateAll() {
         if (!Data.isDecodeComplete) return;
@@ -95,7 +134,6 @@ public class Dispatcher {
         context.close();
         log.debug("Application closed");
     }
-
     public void loadSequence(int size) throws Exception {
         String sequenceSource = Util.getSource(prop.getDebugSequenceSource());
         player.setManager(new PlayerOnlyVideo(timer));

@@ -16,11 +16,11 @@ public interface VideoRepository {
 
     void synchronize(int index, Frame frame);
 
-    void saveMoment(Moment moment);
-
-    void restoreMoment(Moment moment);
-
     void saveOriginalImages();
+
+    void setOriginalList(List<ImageFrame> list);
+
+    List<ImageFrame> getOriginalList();
 
     void clear();
 
@@ -37,6 +37,7 @@ public interface VideoRepository {
     int size();
 
     List<ImageFrame> getList();
+
 
     ImageFrame getImageByNum(int num);
 
