@@ -48,21 +48,10 @@ public class Dispatcher {
         Image image = new Image(Paths.get("D:\\temp\\PlayM\\maya\\samples\\view_20.jpg").toUri().toString());
         System.out.println(image);
     }
-    private List<ImageFrame> loadImages(RequestRange range){
-        Path imageFolder = Paths.get(range.getPath());
-        List<ImageFrame> list = new ArrayList<>();
-        IntStream.range(range.getStart(), range.getEnd())
-                .mapToObj(num-> {
-                    String uriPath = imageFolder.resolve(Util.getImagePath(num)).toUri().toString();
-                    Image image = new Image(uriPath, Data.imageWidth.get(), Data.imageHeight.get(), true, false);
-                    return new ImageFrame(image, num);
-                })
-                .forEach(list::add);
-        return list;
-    };
+
     public void update(RequestRange range){
         // load images from given range
-        List<ImageFrame> newImageFrameList = loadImages(range);
+        List<ImageFrame> newImageFrameList = Util.loadImages(range);
         //get original
         List<ImageFrame> originalList = videoRepo.getOriginalList();
         // change images in original
