@@ -42,8 +42,8 @@ public class PlayM extends Application {
 
         dispatcher.onSceneLoaded(scene, stage);
 
-        //loadVideo();
-        dispatcher.loadSequence(50);
+        loadVideo();
+        //dispatcher.loadSequence(50);
     }
 
     private void loadVideo() throws Exception {

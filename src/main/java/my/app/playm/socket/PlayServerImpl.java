@@ -1,8 +1,8 @@
 package my.app.playm.socket;
 
-import com.google.gson.Gson;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -15,7 +15,7 @@ public class PlayServerImpl implements PlayServer {
     @Autowired
     private ServerSocket server;
     @Autowired
-    private RequestProcessor requestProcessor;
+    private RequestProcessor rangeProcessor;
     private BufferedWriter out;
     private BufferedReader in;
     private Thread socketThread;
@@ -60,7 +60,9 @@ public class PlayServerImpl implements PlayServer {
     private void processRequest(Socket client) {
         try {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            requestProcessor.process(in.readLine());
+
+            rangeProcessor.process(in.readLine());
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("IOException occured on request");

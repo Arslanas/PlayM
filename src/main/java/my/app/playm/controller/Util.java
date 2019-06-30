@@ -57,8 +57,8 @@ public class Util {
         return String.format("view_%s.jpg", num);
     }
 
-    public static List<ImageFrame> loadImages(RequestRange range){
-        Path imageFolder = Paths.get(range.getPath());
+    public static List<ImageFrame> loadImages(RequestRange range, String path){
+        Path imageFolder = Paths.get(path);
         List<ImageFrame> list = new ArrayList<>();
         IntStream.range(range.getStart(), range.getEnd())
                 .mapToObj(num-> {

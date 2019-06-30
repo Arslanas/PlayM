@@ -18,5 +18,7 @@ public class Properties {
     private String debugSequenceSource;
     @Value("${audioSource}")
     private String audioSource;
+    @Value("${mayaImagesPath}")
+    private String mayaImagesPath;
 
 }

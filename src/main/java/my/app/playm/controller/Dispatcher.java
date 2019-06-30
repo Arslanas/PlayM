@@ -51,7 +51,7 @@ public class Dispatcher {
 
     public void update(RequestRange range){
         // load images from given range
-        List<ImageFrame> newImageFrameList = Util.loadImages(range);
+        List<ImageFrame> newImageFrameList = Util.loadImages(range, prop.getMayaImagesPath());
         //get original
         List<ImageFrame> originalList = videoRepo.getOriginalList();
         // change images in original
